@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Fingerprint.Unifications")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6bc23f57b727aaf41bb8fe73203af7011d0a1618")]
 [assembly: System.Reflection.AssemblyProductAttribute("Fingerprint.Unifications")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Fingerprint.Unifications")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

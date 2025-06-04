@@ -1,0 +1,90 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+.log {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: auto;
+    object-fit: cover;
+    z-index: 0;
+    margin-bottom:4vw;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.overlay-text {
+    position: fixed;
+    top: 0%;
+    left:0%;
+    color: white;
+    z-index: 1;
+    padding: 1vw;
+}
+
+h1 {
+    user-select: none;
+    font-size: 4.5vw;
+    text-align: center;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+}
+
+p {
+    user-select: none;
+    font-size: 1.6vw;
+    text-align: center;
+    line-height: 1.4;
+    color: #A2D6F9;
+}
+
+.button-download {
+    position: absolute;
+    margin-top: 38vw;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    background-color: #1E96FC;
+    border-color: #1E96FC;
+    color: white;
+    border-radius: 8px;
+    padding: 25px 40px;
+    font-size: 24px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-download:hover {
+    background-color: #072AC8;
+}
+
+.darker-border-checkbox.form-check-input {
+    border-color: #929292;
+}
+@media (max-width: 850px) {
+    .button-download {
+        font-size: 1.2rem; 
+        padding: 5px 15px;
+    }
+}

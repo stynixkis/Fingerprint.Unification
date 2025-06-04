@@ -5,6 +5,26 @@
       "PackagePath": "staticwebassets\\Fingerprint.Unifications.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\Pictures\\Headlines\\ChoosingAction.Wave.png",
+      "PackagePath": "staticwebassets\\Pictures\\Headlines\\ChoosingAction.Wave.png"
+    },
+    {
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\Pictures\\Headlines\\DownloadSecondAudio.Wave.png",
+      "PackagePath": "staticwebassets\\Pictures\\Headlines\\DownloadSecondAudio.Wave.png"
+    },
+    {
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\Pictures\\Headlines\\FingerprintGeneration.Wave.png",
+      "PackagePath": "staticwebassets\\Pictures\\Headlines\\FingerprintGeneration.Wave.png"
+    },
+    {
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\Pictures\\Headlines\\MainWave.png",
+      "PackagePath": "staticwebassets\\Pictures\\Headlines\\MainWave.png"
+    },
+    {
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\Pictures\\Headlines\\SimilarAudio.Wave.png",
+      "PackagePath": "staticwebassets\\Pictures\\Headlines\\SimilarAudio.Wave.png"
+    },
+    {
       "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
@@ -17,8 +37,8 @@
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\favicon.png",
-      "PackagePath": "staticwebassets\\favicon.png"
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\logotip.png",
+      "PackagePath": "staticwebassets\\logotip.png"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Fingerprint.Unifications.Microsoft.AspNetCore.StaticWebAssets.props",

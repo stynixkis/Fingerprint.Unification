@@ -19,7 +19,6 @@ C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\ob
 C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Fingerprint.Unifications.props
 C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\scopedcss\Components\Layout\MainLayout.razor.rz.scp.css
-C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\scopedcss\Components\Layout\NavMenu.razor.rz.scp.css
 C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\scopedcss\bundle\Fingerprint.Unifications.styles.css
 C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\scopedcss\projectbundle\Fingerprint.Unifications.bundle.scp.css
 C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\Fingerprint.Unifications.dll
@@ -27,3 +26,5 @@ C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\ob
 C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\Fingerprint.Unifications.pdb
 C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\Fingerprint.Unifications.genruntimeconfig.cache
 C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\ref\Fingerprint.Unifications.dll
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\Fingerprint.Unifications.sourcelink.json
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\scopedcss\Components\Pages\Home.razor.rz.scp.css
