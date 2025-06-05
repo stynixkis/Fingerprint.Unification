@@ -25,7 +25,7 @@ body {
     height: auto;
     object-fit: cover;
     z-index: 0;
-    margin-bottom:4vw;
+    margin-bottom: 4vw;
 }
 
 .container {
@@ -37,7 +37,8 @@ body {
 .overlay-text {
     position: fixed;
     top: 0%;
-    left:0%;
+    left: 0%;
+    text-align:center;
     color: white;
     z-index: 1;
     padding: 1vw;
@@ -62,17 +63,42 @@ p {
 .button-download {
     position: absolute;
     margin-top: 38vw;
-    top: 50%; 
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
     background-color: #1E96FC;
     border-color: #1E96FC;
     color: white;
     border-radius: 8px;
     padding: 25px 40px;
-    font-size: 24px; 
+    font-size: 24px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+/* Адаптация контейнера */
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: calc(10vw + 20px); 
+}
+
+button.circle-btn {
+    margin-top: 30%;
+    width: clamp(50px, 20vw, 250px);
+    height: clamp(50px, 20vw, 250px);
+    border-radius: 50%;
+    border-color: #A2D6F9;
+    background-color: #A2D6F9;
+    color: #023E8A;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button.circle-btn:hover {
+    transform: scale(1.1);
 }
 
 .button-download:hover {
@@ -82,9 +108,16 @@ p {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+
 @media (max-width: 850px) {
     .button-download {
-        font-size: 1.2rem; 
+        font-size: 1.2rem;
+        padding: 5px 15px;
+    }
+}
+@media (max-width: 680px) {
+    button.circle-btn {
+        font-size: 0.5rem;
         padding: 5px 15px;
     }
 }

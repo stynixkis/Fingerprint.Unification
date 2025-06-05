@@ -22,8 +22,20 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/aagor/source/repos/Fingerprint.Unifications/Fingerprint.Unifications/Components/Pages/ChoosingAction.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDaG9vc2luZ0FjdGlvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/aagor/source/repos/Fingerprint.Unifications/Fingerprint.Unifications/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aagor/source/repos/Fingerprint.Unifications/Fingerprint.Unifications/Components/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/aagor/source/repos/Fingerprint.Unifications/Fingerprint.Unifications/Components/Pages/UploadingAudioForComparison.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVcGxvYWRpbmdBdWRpb0ZvckNvbXBhcmlzb24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/aagor/source/repos/Fingerprint.Unifications/Fingerprint.Unifications/Components/Routes.razor]
@@ -37,7 +49,3 @@ build_metadata.AdditionalFiles.CssScope =
 [C:/Users/aagor/source/repos/Fingerprint.Unifications/Fingerprint.Unifications/Components/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-yefuwl2qk8
-
-[C:/Users/aagor/source/repos/Fingerprint.Unifications/Fingerprint.Unifications/Components/Pages/Home.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
-build_metadata.AdditionalFiles.CssScope = b-ror2ateb36

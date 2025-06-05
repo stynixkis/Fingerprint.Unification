@@ -1,0 +1,27 @@
+﻿@page "/ChosingAction"
+@inject NavigationManager Navigation
+@inherits ChoosingActionModel
+@rendermode InteractiveServer
+
+<PageTitle>Выбор действия</PageTitle>
+
+<link href="/DictionaryOfStyles.css" rel="stylesheet" />
+<style>
+	h1 {
+		margin-top: 2vw;
+		margin-left: 15vw;
+	}
+</style>
+<header>
+	<div class="container">
+		<img class="log" src="/Pictures/Headlines/ChoosingAction.Wave.png" ondragstart="return false;">
+		<div class="overlay-text">
+			<h1>Выбор действия с аудиофайлом</h1>
+		</div>
+	</div>
+</header>
+<div class="buttons-container">
+	<button class="circle-btn" @* @onclick="NavigateToGenerate" *@>Генерация отпечатка</button>
+	<button class="circle-btn" @onclick="NavigateToDownload">Сравнить с другим аудио</button>
+	<button class="circle-btn">Найти похожее</button>
+</div>

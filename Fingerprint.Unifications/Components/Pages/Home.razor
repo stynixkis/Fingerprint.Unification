@@ -1,21 +1,22 @@
 ﻿@page "/"
+@inject NavigationManager Navigation
+@inherits HomeModel
+@rendermode InteractiveServer
 
 <PageTitle>Главная</PageTitle>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-</head>
+<link href="/DictionaryOfStyles.css" rel="stylesheet" />
 <header>
-    <div class="container">
-        <img class="log" src="/Pictures/Headlines/MainWave.png" ondragstart="return false;">
-        <div class="overlay-text">
-            <h1>Acoustic fingerprint</h1>
-            <p>
-                сжатая цифровая сводка, цифровой отпечаток пальца, детерминированно сгенерированный
-                на основе аудиосигнала, который можно использовать для идентификации аудиосэмпла
-                или быстрого поиска похожих элементов в музыкальной базе данных.
-            </p>
-        </div>
-    </div>
+	<div class="container">
+		<img class="log" src="/Pictures/Headlines/MainWave.png" ondragstart="return false;">
+		<div class="overlay-text">
+			<h1>Acoustic fingerprint</h1>
+			<p>
+				сжатая цифровая сводка, цифровой отпечаток пальца, детерминированно сгенерированный
+				на основе аудиосигнала, который можно использовать для идентификации аудиосэмпла
+				или быстрого поиска похожих элементов в музыкальной базе данных.
+			</p>
+		</div>
+	</div>
 </header>
 
-<button class="button-download">Загрузить аудио</button>
+<button class="button-download" @onclick="NavigateToUpload">Загрузить аудио</button>

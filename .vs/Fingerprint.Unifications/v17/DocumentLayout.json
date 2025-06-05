@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|c:\\users\\aagor\\source\\repos\\fingerprint.unifications\\fingerprint.unifications\\components\\pages\\choosingaction.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|solutionrelative:fingerprint.unifications\\components\\pages\\choosingaction.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|c:\\users\\aagor\\source\\repos\\fingerprint.unifications\\fingerprint.unifications\\components\\pages\\home.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|solutionrelative:fingerprint.unifications\\components\\pages\\home.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|c:\\users\\aagor\\source\\repos\\fingerprint.unifications\\fingerprint.unifications\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|solutionrelative:fingerprint.unifications\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 343,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -18,6 +31,47 @@
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ChoosingAction.razor",
+              "DocumentMoniker": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\ChoosingAction.razor",
+              "RelativeDocumentMoniker": "Fingerprint.Unifications\\Components\\Pages\\ChoosingAction.razor",
+              "ToolTip": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\ChoosingAction.razor",
+              "RelativeToolTip": "Fingerprint.Unifications\\Components\\Pages\\ChoosingAction.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-05T08:20:12.774Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Home.razor.cs",
+              "DocumentMoniker": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\Home.razor.cs",
+              "RelativeDocumentMoniker": "Fingerprint.Unifications\\Components\\Pages\\Home.razor.cs",
+              "ToolTip": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\Home.razor.cs",
+              "RelativeToolTip": "Fingerprint.Unifications\\Components\\Pages\\Home.razor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T07:58:26.395Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "Fingerprint.Unifications\\Components\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\Home.razor",
+              "RelativeToolTip": "Fingerprint.Unifications\\Components\\Pages\\Home.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-05T07:19:00.983Z"
             }
           ]
         },

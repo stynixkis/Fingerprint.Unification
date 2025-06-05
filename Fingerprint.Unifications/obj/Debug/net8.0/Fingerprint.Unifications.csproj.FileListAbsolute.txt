@@ -27,4 +27,3 @@ C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\ob
 C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\Fingerprint.Unifications.genruntimeconfig.cache
 C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\ref\Fingerprint.Unifications.dll
 C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\Fingerprint.Unifications.sourcelink.json
-C:\Users\aagor\source\repos\Fingerprint.Unifications\Fingerprint.Unifications\obj\Debug\net8.0\scopedcss\Components\Pages\Home.razor.rz.scp.css

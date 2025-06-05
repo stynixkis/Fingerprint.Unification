@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Fingerprint.Unifications.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\DictionaryOfStyles.css",
+      "PackagePath": "staticwebassets\\DictionaryOfStyles.css"
+    },
+    {
       "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\Pictures\\Headlines\\ChoosingAction.Wave.png",
       "PackagePath": "staticwebassets\\Pictures\\Headlines\\ChoosingAction.Wave.png"
     },
