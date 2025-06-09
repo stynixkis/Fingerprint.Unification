@@ -41,6 +41,14 @@
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\graff1.png",
+      "PackagePath": "staticwebassets\\graff1.png"
+    },
+    {
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\graff2.png",
+      "PackagePath": "staticwebassets\\graff2.png"
+    },
+    {
       "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\logotip.png",
       "PackagePath": "staticwebassets\\logotip.png"
     },

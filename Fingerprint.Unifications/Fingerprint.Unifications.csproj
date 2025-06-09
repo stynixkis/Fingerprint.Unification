@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Pictures\Headlines\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

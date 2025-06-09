@@ -1,6 +1,6 @@
 ﻿@page "/UploadingAudioForComparison"
 @inject NavigationManager Navigation
-@inherits ChoosingActionModel
+@inherits UploadingAudioForComparisonModel
 @rendermode InteractiveServer
 
 <PageTitle>Загрузка аудио для сравнения</PageTitle>
@@ -21,4 +21,4 @@
 	</div>
 </header>
 
-<button class="button-download">Загрузить аудио</button>
+<button class="button-download" @onclick="NavigateToGenerate">Загрузить аудио</button>

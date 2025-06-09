@@ -2,14 +2,10 @@
 
 namespace Fingerprint.Unifications.Components.Pages
 {
-	public class ChoosingActionModel : ComponentBase
+	public class UploadingAudioForComparisonModel : ComponentBase
 	{
 		[Inject]
 		private NavigationManager NavigationManager { get; set; }
-		public void NavigateToDownload()
-		{
-			NavigationManager.NavigateTo("/UploadingAudioForComparison");
-		}
 		public void NavigateToGenerate()
 		{
 			NavigationManager.NavigateTo("/WorkingWithFingerprint");
