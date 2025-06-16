@@ -1,59 +1,45 @@
 ﻿* {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
-
-body, html {
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
-}
-
-body {
-    background-position: center top;
-    background-size: cover;
-    background-repeat: no-repeat;
-    min-height: 100vh;
-}
-
 .log {
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100vw;
-    height: auto;
-    object-fit: cover;
-    z-index: 0;
-    margin-bottom: 4vw;
+    position: relative;
+    left: 0%;
+    right:0%;
+    margin-left: -3vw;
+    margin-right:-4vw;
+    margin-top: -5vw;
+    width: 100%;
+    min-width: 100vw;
 }
 
 .pic {
-    top: 0%;
-    margin-left: 10vw;
-    width: 50vw;
-    height: 20vw;
-    object-fit: cover;
-    z-index: 0;
-    margin-bottom: 4vw;
+    max-width: 80%;
+    display: block;
+    margin: 20px auto;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    transition: transform 0.2s;
 }
 
-.container {
-    position: relative;
-    width: 100%;
-    height: auto;
-}
+    .pic:hover {
+        transform: scale(1.02);
+    }
 
 .overlay-text {
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    text-align:center;
+    position: absolute; 
+    top: 30%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 100%; 
+    text-align: center; 
     color: white;
     z-index: 1;
-    padding: 1vw;
+    padding: 1rem; 
+    box-sizing: border-box;
 }
-
 h1 {
     user-select: none;
     font-size: 4.5vw;
@@ -72,7 +58,7 @@ p {
 
 .button-download {
     position: absolute;
-    margin-top: 38vw;
+    margin-top: 18vw;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -93,7 +79,7 @@ p {
 }
 
 button.circle-btn {
-    margin-top: 30%;
+    margin-top: 5vw;
     width: clamp(50px, 20vw, 250px);
     height: clamp(50px, 20vw, 250px);
     border-radius: 50%;
@@ -171,5 +157,28 @@ transform: scale(1.1);
     .button-download2 {
         font-size: 0.5rem;
         padding: 5px 15px;
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .log {
+        margin-left: -4vw;
+        margin-right: -6vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .log {
+        margin-left: -5vw;
+        margin-right: -8vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .log {
+        margin-left: -6.5vw;
+        margin-right: -9vw;
+        margin-top: -5vw;
     }
 }

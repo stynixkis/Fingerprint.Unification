@@ -1,0 +1,12 @@
+C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\bin\Debug\net8.0\Audiofingerprint.FFT.deps.json
+C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\bin\Debug\net8.0\Audiofingerprint.FFT.dll
+C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\bin\Debug\net8.0\Audiofingerprint.FFT.pdb
+C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.FFT.csproj.AssemblyReference.cache
+C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.FFT.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.FFT.AssemblyInfoInputs.cache
+C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.FFT.AssemblyInfo.cs
+C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.FFT.csproj.CoreCompileInputs.cache
+C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.FFT.dll
+C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\refint\Audiofingerprint.FFT.dll
+C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.FFT.pdb
+C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\ref\Audiofingerprint.FFT.dll
