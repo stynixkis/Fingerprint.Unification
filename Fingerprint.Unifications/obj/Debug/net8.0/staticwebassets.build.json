@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mIA4rUtwFWjb9wtSJCCv/dwQ7JyKxobOH5EynhVXQCs=",
+  "Hash": "jDl8RDYt+VHCg7m1Apq1Uztbs2SL5ueAUBon+RORM+k=",
   "Source": "Fingerprint.Unifications",
   "BasePath": "_content/Fingerprint.Unifications",
   "Mode": "Default",
@@ -169,6 +169,25 @@
       "OriginalItemSpec": "wwwroot\\graff2.png"
     },
     {
+      "Identity": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\loading.gif",
+      "SourceId": "Fingerprint.Unifications",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\",
+      "BasePath": "_content/Fingerprint.Unifications",
+      "RelativePath": "loading.gif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\loading.gif"
+    },
+    {
       "Identity": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\logotip.png",
       "SourceId": "Fingerprint.Unifications",
       "SourceType": "Discovered",
@@ -281,6 +300,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Pictures\\Headlines\\SimilarAudio.Wave.png"
+    },
+    {
+      "Identity": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\Pictures\\Histogram\\frequency_histogram_one.png",
+      "SourceId": "Fingerprint.Unifications",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\",
+      "BasePath": "_content/Fingerprint.Unifications",
+      "RelativePath": "Pictures/Histogram/frequency_histogram_one.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Pictures\\Histogram\\frequency_histogram_one.png"
     }
   ]
 }

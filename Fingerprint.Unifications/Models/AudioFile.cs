@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Fingerprint.Unifications.Models;
+﻿namespace Fingerprint.Unifications.Models;
 
 public partial class AudioFile
 {

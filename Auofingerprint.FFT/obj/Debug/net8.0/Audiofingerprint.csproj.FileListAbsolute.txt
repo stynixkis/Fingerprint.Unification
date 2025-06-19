@@ -11,3 +11,16 @@ C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\refin
 C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.pdb
 C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\ref\Audiofingerprint.dll
 C:\Users\ксюша\source\repos\Audio\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.sourcelink.json
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\bin\Debug\net8.0\Audiofingerprint.deps.json
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\bin\Debug\net8.0\Audiofingerprint.dll
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\bin\Debug\net8.0\Audiofingerprint.pdb
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.csproj.AssemblyReference.cache
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.AssemblyInfoInputs.cache
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.AssemblyInfo.cs
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.csproj.CoreCompileInputs.cache
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.sourcelink.json
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.dll
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\obj\Debug\net8.0\refint\Audiofingerprint.dll
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\obj\Debug\net8.0\Audiofingerprint.pdb
+C:\Users\aagor\source\repos\Fingerprint.Unifications\Auofingerprint.FFT\obj\Debug\net8.0\ref\Audiofingerprint.dll

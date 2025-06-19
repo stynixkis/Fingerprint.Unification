@@ -1,21 +1,10 @@
 ﻿using Accord.Audio;
-using Accord.Audio.Filters;
-using Accord.Audio.Windows;
 using Accord.Math;
-using System.Drawing;
-using Accord.Math.Decompositions;
-using Accord.Statistics;
 using Accord.Statistics.Analysis;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
-using NWaves.Filters;
-using ScottPlot;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using Color = ScottPlot.Color;
+using System.Xml.Linq;
 
 namespace AudioFingerprinting
 {
@@ -24,14 +13,14 @@ namespace AudioFingerprinting
         private const int TargetSampleRate = 16000;
         private const int FrameSize = 2048;
         private const int FrameStep = 512;
-        private const int MelFilterCount = 40;  
-        private const int MfccCoefficients = 20; 
+        private const int MelFilterCount = 40;
+        private const int MfccCoefficients = 20;
         private const int DeltaWindow = 2;
         private const int HashTimeWindow = 3;
-        private const float SilenceThreshold = 0.025f; 
-        
+        private const float SilenceThreshold = 0.025f;
+
         /// <summary>
-        /// 
+        /// ГЕНЕРАЦИЯ ОТПЕЧАТКА -- ПУТЬ К ФАЙЛУ
         /// </summary>
         /// <param name="audioPath"></param>
         /// <returns></returns>
@@ -52,7 +41,7 @@ namespace AudioFingerprinting
                 double[][][] mfccWithDeltas = AddDeltasAndDoubleDeltas(mfccFeatures);
 
                 double[][] reducedFeatures = ApplyPca(mfccWithDeltas);
-
+                Console.WriteLine("Генерация через MFCC - Успешно!");
                 return QuantizeAndHash(reducedFeatures);
             }
             catch (Exception ex)
@@ -62,10 +51,8 @@ namespace AudioFingerprinting
             }
         }
 
-
-
-
-        public void PlotAudioWaveform(string audioPath1, string audioPath2, string outputPath = "audio_comparison.png")
+        //ГЕНЕРАЦИЯ ГРАФИКОВ
+        public void PlotAudioWaveformTwo(string audioPath1, string audioPath2)
         {
             try
             {
@@ -77,12 +64,6 @@ namespace AudioFingerprinting
                 {
                     Console.WriteLine("Один из файлов не содержит аудиоданных");
                     return;
-                }
-
-                // Удаляем предыдущий файл, если он существует
-                if (File.Exists(outputPath))
-                {
-                    File.Delete(outputPath);
                 }
 
                 // Создание нового графика
@@ -124,11 +105,15 @@ namespace AudioFingerprinting
                 // Автомасштабирование
                 plt.Axes.AutoScale();
 
-                // Сохраняем изображение
-                plt.SavePng(outputPath, 1200, 400);
+                string fullPath = Path.Combine("wwwroot", "Pictures", "Histogram", $"mfcc_histogram_two.png");
 
-                // Открываем изображение
-                OpenImage(outputPath);
+                //// Удаляем предыдущий файл, если он существует
+                //if (File.Exists(fullPath))
+                //{
+                //    File.Delete(fullPath);
+                //}
+                // Сохраняем изображение
+                plt.SavePng(fullPath, 1200, 400);
             }
             catch (Exception ex)
             {
@@ -136,6 +121,55 @@ namespace AudioFingerprinting
             }
         }
 
+        public void PlotAudioWaveformOne(string audioPath)
+        {
+            try
+            {
+                float[] samples1 = LoadAndPreprocessAudio(audioPath);
+
+                if (samples1.Length == 0)
+                {
+                    Console.WriteLine("Файл не содержит аудиоданных");
+                    return;
+                }
+
+                var plt = new ScottPlot.Plot();
+                plt.Title("Сравнение аудиосигналов");
+                plt.YLabel("Амплитуда (нормированная)");
+                plt.XLabel("Время, сек");
+
+                double[] ys1 = samples1.Select(s => (double)s).ToArray();
+
+                double duration1 = (double)samples1.Length / TargetSampleRate;
+
+                double[] xs1 = Enumerable.Range(0, ys1.Length)
+                                       .Select(x => x * duration1 / ys1.Length)
+                                       .ToArray();
+
+
+                var sig1 = plt.Add.Scatter(xs1, ys1);
+                sig1.Color = new ScottPlot.Color(0, 0, 255);
+                sig1.Label = Path.GetFileNameWithoutExtension(audioPath);
+                sig1.LineWidth = 1;
+
+                plt.ShowLegend();
+
+                plt.Axes.AutoScale();
+
+                string fullPath = Path.Combine("wwwroot", "Pictures", "Histogram", $"mfcc_histogram_one.png");
+
+                //// Удаляем предыдущий файл, если он существует
+                //if (File.Exists(fullPath))
+                //{
+                //    File.Delete(fullPath);
+                //}
+                plt.SavePng(fullPath, 1200, 400);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка построения графика: {ex.Message}");
+            }
+        }
 
         private void OpenImage(string filePath)
         {
@@ -156,11 +190,8 @@ namespace AudioFingerprinting
             }
         }
 
-
-
-
         /// <summary>
-        /// 
+        /// СРАВНЕНИЕ 2 СГЕНЕРИРОВАННЫХ ОТПЕЧАТКОВ
         /// </summary>
         /// <param name="fp1"></param>
         /// <param name="fp2"></param>
@@ -306,12 +337,12 @@ namespace AudioFingerprinting
             {
                 if (Math.Abs(audioData[i]) > threshold)
                 {
-                    start = Math.Max(0, i - (TargetSampleRate / 10)); 
+                    start = Math.Max(0, i - (TargetSampleRate / 10));
                     break;
                 }
             }
 
-            
+
             for (int i = audioData.Length - 1; i >= 0; i--)
             {
                 if (Math.Abs(audioData[i]) > threshold)
@@ -335,7 +366,6 @@ namespace AudioFingerprinting
         /// <param name="frameSize"></param>
         /// <param name="frameStep"></param>
         /// <returns></returns>
-
         private List<float[]> GetFrames(float[] audioData, int frameSize, int frameStep)
         {
             var frames = new List<float[]>();
@@ -542,14 +572,12 @@ namespace AudioFingerprinting
             {
                 Method = PrincipalComponentMethod.Center,
                 Whiten = true,
-                NumberOfOutputs = MfccCoefficients 
+                NumberOfOutputs = MfccCoefficients
             };
 
             pca.Learn(data);
             return pca.Transform(data);
         }
-
-
 
         /// <summary>
         /// 
@@ -615,7 +643,6 @@ namespace AudioFingerprinting
             }
         }
 
-        
         /// <summary>
         /// 
         /// </summary>

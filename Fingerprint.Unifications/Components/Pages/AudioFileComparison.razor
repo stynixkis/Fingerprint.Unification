@@ -1,0 +1,117 @@
+﻿@page "/AudioFileComparison"
+@inject NavigationManager Navigation
+@inject IJSRuntime JsRuntime
+@inherits AudioFileComparisonModel
+@rendermode InteractiveServer
+
+<PageTitle>Сравнение аудио-отпечатков</PageTitle>
+
+<link href="/DictionaryOfStyles.css" rel="stylesheet" />
+<style>
+	.header-container {
+		position: relative;
+		width: 100%;
+	}
+
+	.overlay-text {
+		position: absolute;
+		top: 30%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 100%;
+		text-align: center;
+	}
+
+	h1 {
+		color: white;
+		font-size: clamp(48px, 5vw, 92px);
+		margin: 0;
+		padding: 0 20px;
+	}
+
+	h2 {
+		margin: 20px 10% 10px;
+	}
+</style>
+
+<header class="header-container">
+	<img class="log" src="/Pictures/Headlines/FingerprintGeneration.Wave.png" ondragstart="return false;">
+	<div class="overlay-text">
+		<h1>Сравнение аудио-отпечатков</h1>
+	</div>
+</header>
+
+<h2 style="margin-top: 5vw">СПЕКТРАЛЬНЫЙ АНАЛИЗ. @InfoFFT</h2>
+
+@if (@PathFrequencyHistogramOne != "")
+{
+	<a class="pic" href="@PathFrequencyHistogramOne" data-lightbox="example-1">
+		<img class="pic" src="@PathFrequencyHistogramOne" alt="График спектрального анализа">
+	</a>
+}
+else
+{
+	<p style="color:red">Ошибка загрузки графика</p>
+}
+<h2>МЕТОД MFCC. @InfoMFCC</h2>
+
+@if (@PathMFCCHistogramOne != "")
+{
+	<a class="pic" href="@PathMFCCHistogramOne" data-lightbox="example-2">
+		<img class="pic" src="@PathMFCCHistogramOne" alt="График метода MFCC">
+	</a>
+}
+else
+{
+	<p style="color:red">Ошибка загрузки графика</p>
+}
+
+<div class="buttons-container2">
+	<button class="button-download2" @onclick="DownloadChartFFT">Скачать график<br />Спектрального анализа</button>
+	<button class="button-download2" @onclick="DownloadChartMFCC">Скачать график<br />метода MFCC</button>
+</div>
+@code
+{
+	public void DownloadChartFFT()
+	{
+		if (PathFrequencyHistogramOne == "")
+		{
+			JsRuntime.InvokeVoidAsync("alert", "ОШИБКА ЗАГРУЗКИ");
+		}
+		else
+		{
+			var workingDir = Path.Combine(
+					Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+					"Downloads");
+
+			Directory.CreateDirectory(workingDir);
+
+			string fullPath = Path.Combine("wwwroot", "Pictures", "Histogram", "frequency_histogram_two.png");
+			string destinationPath = Path.Combine(workingDir, $"frequency_histogram_compare_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.png");
+
+			File.Copy(fullPath, destinationPath, overwrite: true);
+			JsRuntime.InvokeVoidAsync("alert", "Загрузка выполнена успешно!");
+		}
+	}
+	public void DownloadChartMFCC()
+	{
+		if (PathMFCCHistogramOne == "")
+		{
+			JsRuntime.InvokeVoidAsync("alert", "ОШИБКА ЗАГРУЗКИ");
+		}
+		else
+		{
+			var workingDir = Path.Combine(
+				Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+				"Downloads");
+
+			Directory.CreateDirectory(workingDir);
+
+			string fullPath = Path.Combine("wwwroot", "Pictures", "Histogram", "mfcc_histogram_two.png");
+			string destinationPath = Path.Combine(workingDir, $"mfcc_histogram_compare_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.png");
+
+			File.Copy(fullPath, destinationPath, overwrite: true);
+			JsRuntime.InvokeVoidAsync("alert", "Загрузка выполнена успешно!");
+		}
+	}
+}

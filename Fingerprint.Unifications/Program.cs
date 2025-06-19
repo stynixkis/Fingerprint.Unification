@@ -1,4 +1,6 @@
+using Fingerprint.Unifications;
 using Fingerprint.Unifications.Components;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddControllers(); 
+builder.Services.AddDbContext<FingerprintDatabaseContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection")));
+
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

@@ -1,0 +1,14 @@
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\bin\Debug\net8.0\Accord.dll.config
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\bin\Debug\net8.0\PrintLibrary.deps.json
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\bin\Debug\net8.0\PrintLibrary.dll
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\bin\Debug\net8.0\PrintLibrary.pdb
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\obj\Debug\net8.0\PrintLibrary.csproj.AssemblyReference.cache
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\obj\Debug\net8.0\PrintLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\obj\Debug\net8.0\PrintLibrary.AssemblyInfoInputs.cache
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\obj\Debug\net8.0\PrintLibrary.AssemblyInfo.cs
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\obj\Debug\net8.0\PrintLibrary.csproj.CoreCompileInputs.cache
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\obj\Debug\net8.0\PrintLibrary.sourcelink.json
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\obj\Debug\net8.0\PrintLibrary.dll
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\obj\Debug\net8.0\refint\PrintLibrary.dll
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\obj\Debug\net8.0\PrintLibrary.pdb
+C:\Users\aagor\source\repos\Fingerprint.Unifications\PrintLibrary\obj\Debug\net8.0\ref\PrintLibrary.dll

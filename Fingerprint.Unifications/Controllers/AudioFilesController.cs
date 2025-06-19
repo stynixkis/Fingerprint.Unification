@@ -1,122 +1,335 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Audiofingerprint.Classes;
+using Audiofingerprint.Services;
+using AudioFingerprinting;
+using Fingerprint.Unifications.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Fingerprint.Unifications;
-using Fingerprint.Unifications.Models;
+using NAudio.Wave;
+using NuGet.Packaging.Core;
+using System.IO;
+using System.Xml.Linq;
 
 namespace Fingerprint.Unifications.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AudioFilesController : ControllerBase
-    {
-        private readonly FingerprintDatabaseContext _context;
+	[Route("api/[controller]")]
+	[ApiController]
+	public class AudioFilesController : ControllerBase
+	{
+		private readonly FingerprintDatabaseContext _context;
+		private MfccFingerprinter _fingerprinterMFCC = new MfccFingerprinter();
+		private FingerprintService _fingerprintService = new FingerprintService();
+		public AudioFilesController(FingerprintDatabaseContext context)
+		{
+			_context = context;
+		}
 
-        public AudioFilesController(FingerprintDatabaseContext context)
-        {
-            _context = context;
-        }
+		// GET: api/AudioFiles
+		[HttpGet]
+		public async Task<ActionResult<IEnumerable<AudioFile>>> GetAudioFiles()
+		{
+			return await _context.AudioFiles.ToListAsync();
+		}
 
-        // GET: api/AudioFiles
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<AudioFile>>> GetAudioFiles()
-        {
-            return await _context.AudioFiles.ToListAsync();
-        }
+		// GET: api/AudioFiles/5
+		[HttpGet("{id}")]
+		public async Task<ActionResult<AudioFile>> GetAudioFile(int id)
+		{
+			var audioFile = await _context.AudioFiles.FindAsync(id);
 
-        // GET: api/AudioFiles/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AudioFile>> GetAudioFile(int id)
-        {
-            var audioFile = await _context.AudioFiles.FindAsync(id);
+			if (audioFile == null)
+			{
+				return NotFound();
+			}
 
-            if (audioFile == null)
-            {
-                return NotFound();
-            }
+			return audioFile;
+		}
 
-            return audioFile;
-        }
+		// PUT: api/AudioFiles/5
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPut("{id}")]
+		public async Task<IActionResult> PutAudioFile(int id, AudioFile audioFile)
+		{
+			if (id != audioFile.IdAudio)
+			{
+				return BadRequest();
+			}
 
-        // PUT: api/AudioFiles/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAudioFile(int id, AudioFile audioFile)
-        {
-            if (id != audioFile.IdAudio)
-            {
-                return BadRequest();
-            }
+			_context.Entry(audioFile).State = EntityState.Modified;
 
-            _context.Entry(audioFile).State = EntityState.Modified;
+			try
+			{
+				await _context.SaveChangesAsync();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!AudioFileExists(id))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AudioFileExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			return NoContent();
+		}
 
-            return NoContent();
-        }
+		[HttpPost("Generation-with-storage-in-the-database")]
+		public async Task<ActionResult<AudioFile>> PostAudioFileDB([FromForm] string path)
+		{
+			if (string.IsNullOrWhiteSpace(path))
+				return BadRequest("Path cannot be empty");
 
-        // POST: api/AudioFiles
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<AudioFile>> PostAudioFile(AudioFile audioFile)
-        {
-            _context.AudioFiles.Add(audioFile);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (AudioFileExists(audioFile.IdAudio))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			if (!path.EndsWith(".wav", StringComparison.OrdinalIgnoreCase))
+				return BadRequest("Only .wav files are supported");
 
-            return CreatedAtAction("GetAudioFile", new { id = audioFile.IdAudio }, audioFile);
-        }
+			if (!System.IO.File.Exists(path))
+				return NotFound($"File not found: {path}");
 
-        // DELETE: api/AudioFiles/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAudioFile(int id)
-        {
-            var audioFile = await _context.AudioFiles.FindAsync(id);
-            if (audioFile == null)
-            {
-                return NotFound();
-            }
+			try
+			{
+				var audioFile = new AudioFile
+				{
+					TitleAudio = Path.GetFileNameWithoutExtension(path),
+					IdAudio = _context.AudioFiles.Any()
+						? _context.AudioFiles.Max(x => x.IdAudio) + 1
+						: 1
+				};
 
-            _context.AudioFiles.Remove(audioFile);
-            await _context.SaveChangesAsync();
+				var workingDir = Path.Combine(
+					Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+					"Downloads",
+					"FingerprintResults");
 
-            return NoContent();
-        }
+				Directory.CreateDirectory(workingDir);
 
-        private bool AudioFileExists(int id)
-        {
-            return _context.AudioFiles.Any(e => e.IdAudio == id);
-        }
-    }
+				audioFile.MfccPrint = _fingerprinterMFCC.GenerateFingerprint(path);
+				var mfccFilePath = Path.Combine(workingDir, $"{audioFile.TitleAudio}_MFCC.bin");
+				try
+				{
+					using (var writer = new BinaryWriter(System.IO.File.Open(mfccFilePath, FileMode.Create)))
+					{
+						foreach (uint hash in audioFile.MfccPrint)
+							writer.Write(hash);
+					}
+				}
+				catch (IOException ex)
+				{
+					return StatusCode(500, $"Failed to save MFCC: {ex.Message}");
+				}
+
+				var fftFilePath = Path.Combine(workingDir);
+				string resultGenerateFFT = _fingerprintService.GenerateFingerprint(path, fftFilePath);
+
+				try
+				{
+					audioFile.FftPrint = System.IO.File.ReadAllBytes(resultGenerateFFT);
+				}
+				catch (IOException ex)
+				{
+					return StatusCode(500, $"Failed to read FFT file: {ex.Message}");
+				}
+
+				_context.AudioFiles.Add(audioFile);
+				await _context.SaveChangesAsync();
+
+				return CreatedAtAction(nameof(GetAudioFile), new { id = audioFile.IdAudio }, audioFile);
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, $"Processing failed: {ex.Message}");
+			}
+		}
+		[HttpPost("Generation-without-saving-in-the-database")]
+		public async Task<ActionResult<AudioFile>> PostAudioFileNotDB([FromForm] string path)
+		{
+			if (string.IsNullOrWhiteSpace(path))
+				return BadRequest("Path cannot be empty");
+
+			if (!path.EndsWith(".wav", StringComparison.OrdinalIgnoreCase))
+				return BadRequest("Only .wav files are supported");
+
+			if (!System.IO.File.Exists(path))
+				return NotFound($"File not found: {path}");
+
+			try
+			{
+				var audioFile = new AudioFile
+				{
+					TitleAudio = Path.GetFileNameWithoutExtension(path),
+					IdAudio = 0
+				};
+
+				var workingDir = Path.Combine(
+					Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+					"Downloads",
+					"FingerprintResults");
+
+				Directory.CreateDirectory(workingDir);
+
+				audioFile.MfccPrint = _fingerprinterMFCC.GenerateFingerprint(path);
+				var mfccFilePath = Path.Combine(workingDir, $"{audioFile.TitleAudio}_MFCC.bin");
+				try
+				{
+					using (var writer = new BinaryWriter(System.IO.File.Open(mfccFilePath, FileMode.Create)))
+					{
+						foreach (uint hash in audioFile.MfccPrint)
+							writer.Write(hash);
+					}
+				}
+				catch (IOException ex)
+				{
+					return StatusCode(500, $"Failed to save MFCC: {ex.Message}");
+				}
+
+				var fftFilePath = Path.Combine(workingDir);
+				string resultGenerateFFT = _fingerprintService.GenerateFingerprint(path, fftFilePath);
+
+				try
+				{
+					audioFile.FftPrint = System.IO.File.ReadAllBytes(resultGenerateFFT);
+				}
+				catch (IOException ex)
+				{
+					return StatusCode(500, $"Failed to read FFT file: {ex.Message}");
+				}
+
+				return CreatedAtAction(nameof(GetAudioFile), new { id = audioFile.IdAudio }, audioFile);
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, $"Processing failed: {ex.Message}");
+			}
+		}
+
+		[HttpPost("compare-mfcc")]
+		public async Task<ActionResult<string>> PostAudioFilesComparisonMFCC(
+			[FromForm] string pathFirst,
+			[FromForm] string pathSecond)
+		{
+			if (string.IsNullOrWhiteSpace(pathFirst))
+				return BadRequest("Path 1 cannot be empty");
+
+			if (!pathFirst.EndsWith(".bin", StringComparison.OrdinalIgnoreCase))
+				return BadRequest("Only .bin files 1 are supported");
+
+			if (!System.IO.File.Exists(pathFirst))
+				return NotFound($"File 1 not found: {pathFirst}");
+
+			if (string.IsNullOrWhiteSpace(pathSecond))
+				return BadRequest("Path 2 cannot be empty");
+
+			if (!pathSecond.EndsWith(".bin", StringComparison.OrdinalIgnoreCase))
+				return BadRequest("Only .bin files 2 are supported");
+
+			if (!System.IO.File.Exists(pathSecond))
+				return NotFound($"File 2 not found: {pathSecond}");
+			try
+			{
+				byte[] fingerprintFirst;
+				try
+				{
+					fingerprintFirst = System.IO.File.ReadAllBytes(pathFirst);
+				}
+				catch (IOException ex)
+				{
+					return StatusCode(500, $"Failed to read file 1: {ex.Message}");
+				}
+				byte[] fingerprintSecond;
+				try
+				{
+					fingerprintSecond = System.IO.File.ReadAllBytes(pathSecond);
+				}
+				catch (IOException ex)
+				{
+					return StatusCode(500, $"Failed to read file 2: {ex.Message}");
+				}
+
+				double resultMFCC = _fingerprinterMFCC.Compare(fingerprintFirst, fingerprintSecond);
+
+				string resultComparison = $"Процент схожести по методу MFCC: {Math.Round(resultMFCC, 2)}";
+				return resultComparison;
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, $"Processing failed: {ex.Message}");
+			}
+		}
+
+		[HttpPost("compare-fft")]
+		public async Task<ActionResult<string>> PostAudioFilesComparisonFFT(
+			[FromForm] string pathFirst,
+			[FromForm] string pathSecond)
+		{
+			if (string.IsNullOrWhiteSpace(pathFirst))
+				return BadRequest("Path 1 cannot be empty");
+
+			if (!pathFirst.EndsWith(".bin", StringComparison.OrdinalIgnoreCase))
+				return BadRequest("Only .bin files 1 are supported");
+
+			if (!System.IO.File.Exists(pathFirst))
+				return NotFound($"File 1 not found: {pathFirst}");
+
+			if (string.IsNullOrWhiteSpace(pathSecond))
+				return BadRequest("Path 2 cannot be empty");
+
+			if (!pathSecond.EndsWith(".bin", StringComparison.OrdinalIgnoreCase))
+				return BadRequest("Only .bin files 2 are supported");
+
+			if (!System.IO.File.Exists(pathSecond))
+				return NotFound($"File 2 not found: {pathSecond}");
+			try
+			{
+				byte[] fingerprintFirst;
+				try
+				{
+					fingerprintFirst = System.IO.File.ReadAllBytes(pathFirst);
+				}
+				catch (IOException ex)
+				{
+					return StatusCode(500, $"Failed to read file 1: {ex.Message}");
+				}
+				byte[] fingerprintSecond;
+				try
+				{
+					fingerprintSecond = System.IO.File.ReadAllBytes(pathSecond);
+				}
+				catch (IOException ex)
+				{
+					return StatusCode(500, $"Failed to read file 2: {ex.Message}");
+				}
+
+				double resultFFT = _fingerprintService.CompareFingerprints(fingerprintFirst, fingerprintSecond);
+
+				string resultComparison = $"Процент схожести по методу FFT: {Math.Round(resultFFT, 2)}";
+				return resultComparison;
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, $"Processing failed: {ex.Message}");
+			}
+		}
+
+		// DELETE: api/AudioFiles/5
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteAudioFile(int id)
+		{
+			var audioFile = await _context.AudioFiles.FindAsync(id);
+			if (audioFile == null)
+			{
+				return NotFound();
+			}
+
+			_context.AudioFiles.Remove(audioFile);
+			await _context.SaveChangesAsync();
+
+			return NoContent();
+		}
+
+		private bool AudioFileExists(int id)
+		{
+			return _context.AudioFiles.Any(e => e.IdAudio == id);
+		}
+	}
 }

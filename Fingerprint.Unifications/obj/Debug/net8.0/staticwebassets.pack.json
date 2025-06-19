@@ -29,6 +29,10 @@
       "PackagePath": "staticwebassets\\Pictures\\Headlines\\SimilarAudio.Wave.png"
     },
     {
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\Pictures\\Histogram\\frequency_histogram_one.png",
+      "PackagePath": "staticwebassets\\Pictures\\Histogram\\frequency_histogram_one.png"
+    },
+    {
       "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
@@ -47,6 +51,10 @@
     {
       "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\graff2.png",
       "PackagePath": "staticwebassets\\graff2.png"
+    },
+    {
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\loading.gif",
+      "PackagePath": "staticwebassets\\loading.gif"
     },
     {
       "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\logotip.png",

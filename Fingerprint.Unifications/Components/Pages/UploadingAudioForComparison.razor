@@ -7,8 +7,61 @@
 
 <link href="/DictionaryOfStyles.css" rel="stylesheet" />
 <style>
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
 
+    .loading-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .loading-gif {
+        width: 100px;
+        height: 100px;
+    }
+
+    .loading-text {
+        color: #120a8f;
+        font-size: 2rem;
+        font-weight: bold;
+        text-align: center;
+        animation: pulse 1.5s infinite;
+    }
+
+    @@keyframes pulse {
+        0% {opacity: 1;}
+        50% {opacity: 0.5;}
+        100% {opacity: 1;}
+    }
+
+    .buttons-container {
+        position: relative;
+        z-index: 1;
+    }
 </style>
+
+@if (showLoading)
+{
+	<div class="loading-overlay">
+		<div class="loading-content">
+			<img class="loading-gif" src="/loading.gif" alt="Загрузка" />
+			<div class="loading-text">ПОДОЖДИТЕ, ИДЕТ СРАВНЕНИЕ!</div>
+		</div>
+	</div>
+}
 <header>
 	<img class="log" src="/Pictures/Headlines/DownloadSecondAudio.Wave.png" style="width: 100%; height: auto;" ondragstart="return false;">
 	<div class="container">
@@ -18,4 +71,9 @@
 	</div>
 </header>
 
-<button class="button-download" @onclick="NavigateToGenerate">Загрузить аудио</button>
+<label class="button-download">
+	📁 Выбрать .wav файл
+	<InputFile OnChange="HandleFileSelected"
+			   accept=".wav"
+			   style="display: none;" />
+</label>

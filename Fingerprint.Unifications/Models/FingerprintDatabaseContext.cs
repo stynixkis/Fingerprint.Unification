@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Fingerprint.Unifications.Models;
+﻿using Fingerprint.Unifications.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fingerprint.Unifications;

@@ -2,7 +2,6 @@
 @inject NavigationManager Navigation
 @inherits HomeModel
 @rendermode InteractiveServer
-
 <PageTitle>Главная</PageTitle>
 <link href="/DictionaryOfStyles.css" rel="stylesheet" />
 <header>
@@ -19,4 +18,9 @@
 	</div>
 </header>
 
-<button class="button-download" @onclick="NavigateToUpload">Загрузить аудио</button>
+<label class="button-download">
+	📁 Выбрать .wav файл
+	<InputFile OnChange="HandleFileSelected"
+			   accept=".wav"
+			   style="display: none;" />
+</label>

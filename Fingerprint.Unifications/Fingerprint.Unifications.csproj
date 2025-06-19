@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="AudioFilesUser\" />
     <Folder Include="wwwroot\Pictures\Headlines\" />
+    <Folder Include="wwwroot\Pictures\Histogram\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +27,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Auofingerprint.FFT\Audiofingerprint.csproj" />
+    <ProjectReference Include="..\PrintLibrary\PrintLibrary.csproj" />
   </ItemGroup>
 
 </Project>

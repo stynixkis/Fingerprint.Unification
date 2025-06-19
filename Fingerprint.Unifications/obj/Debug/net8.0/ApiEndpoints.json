@@ -21,32 +21,6 @@
   },
   {
     "ContainingType": "Fingerprint.Unifications.Controllers.AudioFilesController",
-    "Method": "PostAudioFile",
-    "RelativePath": "api/AudioFiles",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "audioFile",
-        "Type": "Fingerprint.Unifications.Models.AudioFile",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Fingerprint.Unifications.Models.AudioFile",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "Fingerprint.Unifications.Controllers.AudioFilesController",
     "Method": "GetAudioFile",
     "RelativePath": "api/AudioFiles/{id}",
     "HttpMethod": "GET",
@@ -107,5 +81,119 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Fingerprint.Unifications.Controllers.AudioFilesController",
+    "Method": "PostAudioFilesComparisonFFT",
+    "RelativePath": "api/AudioFiles/compare-fft",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pathFirst",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "pathSecond",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Fingerprint.Unifications.Controllers.AudioFilesController",
+    "Method": "PostAudioFilesComparisonMFCC",
+    "RelativePath": "api/AudioFiles/compare-mfcc",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pathFirst",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "pathSecond",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Fingerprint.Unifications.Controllers.AudioFilesController",
+    "Method": "PostAudioFileDB",
+    "RelativePath": "api/AudioFiles/Generation-with-storage-in-the-database",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "path",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Fingerprint.Unifications.Models.AudioFile",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Fingerprint.Unifications.Controllers.AudioFilesController",
+    "Method": "PostAudioFileNotDB",
+    "RelativePath": "api/AudioFiles/Generation-without-saving-in-the-database",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "path",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Fingerprint.Unifications.Models.AudioFile",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]
