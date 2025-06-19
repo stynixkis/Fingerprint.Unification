@@ -1,0 +1,262 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\FingerprintForAdministrator\\FingerprintForAdministrator.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Auofingerprint.FFT\\Audiofingerprint.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Auofingerprint.FFT\\Audiofingerprint.csproj",
+        "projectName": "Audiofingerprint",
+        "projectPath": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Auofingerprint.FFT\\Audiofingerprint.csproj",
+        "packagesPath": "C:\\Users\\aagor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Auofingerprint.FFT\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\aagor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "MathNet.Numerics": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "NAudio": {
+              "target": "Package",
+              "version": "[2.2.1, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.411/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\FingerprintForAdministrator\\FingerprintForAdministrator.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\FingerprintForAdministrator\\FingerprintForAdministrator.csproj",
+        "projectName": "FingerprintForAdministrator",
+        "projectPath": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\FingerprintForAdministrator\\FingerprintForAdministrator.csproj",
+        "packagesPath": "C:\\Users\\aagor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\FingerprintForAdministrator\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\aagor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Auofingerprint.FFT\\Audiofingerprint.csproj": {
+                "projectPath": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Auofingerprint.FFT\\Audiofingerprint.csproj"
+              },
+              "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\PrintLibrary\\PrintLibrary.csproj": {
+                "projectPath": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\PrintLibrary\\PrintLibrary.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.411/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\PrintLibrary\\PrintLibrary.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\PrintLibrary\\PrintLibrary.csproj",
+        "projectName": "PrintLibrary",
+        "projectPath": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\PrintLibrary\\PrintLibrary.csproj",
+        "packagesPath": "C:\\Users\\aagor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\PrintLibrary\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\aagor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Accord": {
+              "target": "Package",
+              "version": "[3.8.0, )"
+            },
+            "Accord.Audio": {
+              "target": "Package",
+              "version": "[3.8.0, )"
+            },
+            "Accord.Math": {
+              "target": "Package",
+              "version": "[3.8.0, )"
+            },
+            "Accord.Statistics": {
+              "target": "Package",
+              "version": "[3.8.0, )"
+            },
+            "NAudio": {
+              "target": "Package",
+              "version": "[2.2.1, )"
+            },
+            "NWaves": {
+              "target": "Package",
+              "version": "[0.9.6, )"
+            },
+            "ScottPlot": {
+              "target": "Package",
+              "version": "[5.0.55, )"
+            },
+            "System.Numerics.Vectors": {
+              "target": "Package",
+              "version": "[4.6.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.411/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

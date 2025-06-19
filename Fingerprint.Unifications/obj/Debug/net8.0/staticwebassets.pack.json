@@ -33,6 +33,14 @@
       "PackagePath": "staticwebassets\\Pictures\\Histogram\\frequency_histogram_one.png"
     },
     {
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\Pictures\\Histogram\\frequency_histogram_two.png",
+      "PackagePath": "staticwebassets\\Pictures\\Histogram\\frequency_histogram_two.png"
+    },
+    {
+      "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\Pictures\\Histogram\\mfcc_histogram_two.png",
+      "PackagePath": "staticwebassets\\Pictures\\Histogram\\mfcc_histogram_two.png"
+    },
+    {
       "Id": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },

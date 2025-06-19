@@ -47,15 +47,19 @@ namespace Fingerprint.Unifications.Controllers
 		// PUT: api/AudioFiles/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
-		public async Task<IActionResult> PutAudioFile(int id, AudioFile audioFile)
+		public async Task<IActionResult> PutAudioFile(int id, string title)
 		{
-			if (id != audioFile.IdAudio)
+			var entryItem = _context.AudioFiles.Where(p => p.IdAudio == id).FirstOrDefault();
+			if (entryItem == null)
 			{
-				return BadRequest();
+				return BadRequest("There is no record with the entered id");
+			}
+			if (title == null || String.IsNullOrEmpty(title.Trim()))
+			{
+				return BadRequest("The audio title cannot be empty");
 			}
 
-			_context.Entry(audioFile).State = EntityState.Modified;
-
+			entryItem.TitleAudio = title;
 			try
 			{
 				await _context.SaveChangesAsync();

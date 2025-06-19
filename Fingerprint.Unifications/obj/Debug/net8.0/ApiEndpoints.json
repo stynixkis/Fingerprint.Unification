@@ -59,9 +59,9 @@
         "IsRequired": true
       },
       {
-        "Name": "audioFile",
-        "Type": "Fingerprint.Unifications.Models.AudioFile",
-        "IsRequired": true
+        "Name": "title",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
