@@ -1,13 +1,8 @@
-﻿using Audiofingerprint.Classes;
-using Audiofingerprint.Services;
+﻿using Audiofingerprint.Services;
 using AudioFingerprinting;
 using Fingerprint.Unifications.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NAudio.Wave;
-using NuGet.Packaging.Core;
-using System.IO;
-using System.Xml.Linq;
 
 namespace Fingerprint.Unifications.Controllers
 {

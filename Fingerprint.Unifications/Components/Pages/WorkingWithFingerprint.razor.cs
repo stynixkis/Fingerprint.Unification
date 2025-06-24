@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace Fingerprint.Unifications.Components.Pages
 {

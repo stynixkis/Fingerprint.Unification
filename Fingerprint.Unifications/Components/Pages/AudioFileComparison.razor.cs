@@ -9,8 +9,8 @@ namespace Fingerprint.Unifications.Components.Pages
 		private NavigationManager NavigationManager { get; set; }
 		public string PathFrequencyHistogramOne { get; set; } = Path.Combine("Pictures", "Histogram", "frequency_histogram_two.png");
 		public string PathMFCCHistogramOne { get; set; } = Path.Combine("Pictures", "Histogram", "mfcc_histogram_two.png");
-		public string InfoFFT { get;set; }
-		public string InfoMFCC {  get; set; }
+		public string InfoFFT { get; set; }
+		public string InfoMFCC { get; set; }
 
 		protected override void OnInitialized()
 		{

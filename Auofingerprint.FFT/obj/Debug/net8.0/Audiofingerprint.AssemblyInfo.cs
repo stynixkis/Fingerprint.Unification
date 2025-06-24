@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Audiofingerprint")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b470a5f3af71142d276a1856fef50b353f73ed63")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7e1271b642597da76e2134df0b870b791c62e069")]
 [assembly: System.Reflection.AssemblyProductAttribute("Audiofingerprint")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Audiofingerprint")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

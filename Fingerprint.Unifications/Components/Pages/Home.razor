@@ -1,11 +1,15 @@
 ﻿@page "/"
 @inject NavigationManager Navigation
+@inject IJSRuntime JsRuntime
 @inherits HomeModel
 @rendermode InteractiveServer
 <PageTitle>Главная</PageTitle>
 <link href="/DictionaryOfStyles.css" rel="stylesheet" />
+<style>
+
+</style>
 <header>
-	<img class="log" src="/Pictures/Headlines/MainWave.png" style="width: 100%; height: auto;" ondragstart="return false;">
+	<img class="log" src="/Pictures/Headlines/MainWave.png" style="width: 100%;height: auto;" ondragstart="return false;">
 	<div class="container">
 		<div class="overlay-text">
 			<h1>Acoustic fingerprint</h1>
@@ -20,7 +24,26 @@
 
 <label class="button-download">
 	📁 Выбрать .wav файл
-	<InputFile OnChange="HandleFileSelected"
+	<InputFile OnChange="ExeptionView"
 			   accept=".wav"
 			   style="display: none;" />
 </label>
+
+@code{
+	public async Task ExeptionView(InputFileChangeEventArgs e)
+	{
+		try
+		{
+			if (!e.File.Name.EndsWith(".wav", StringComparison.OrdinalIgnoreCase))
+			{
+				await JsRuntime.InvokeVoidAsync("alert", "Требуется файл формата .wav");
+				return;
+			}
+			HandleFileSelected(e);
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Ошибка: " + ex.Message);
+		}
+	}
+}
