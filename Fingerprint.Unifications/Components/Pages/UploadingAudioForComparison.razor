@@ -93,8 +93,13 @@
                 await JsRuntime.InvokeVoidAsync("alert", "Требуется файл формата .wav");
                 return;
             }
-            else
-                HandleFileSelected(e);
+            if (e.File.Size > 50 * 1024 * 1024)
+            {
+                await JsRuntime.InvokeVoidAsync("alert", "Размер файла должен быть не больше 50 МБ");
+                return;
+            }
+
+            HandleFileSelected(e);
         }
         catch (Exception ex)
         {

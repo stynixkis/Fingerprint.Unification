@@ -341,7 +341,6 @@ namespace Audiofingerprint.Services
 			{
 				foreach (uint hash in fingerprint)
 				{
-					Console.WriteLine("");
 					writer.Write(hash);
 				}
 			}

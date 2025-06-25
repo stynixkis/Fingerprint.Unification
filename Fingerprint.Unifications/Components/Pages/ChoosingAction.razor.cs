@@ -102,7 +102,7 @@ namespace Fingerprint.Unifications.Components.Pages
 					{
 						UploadedFile.dictionaryFFT.Add(item.TitleAudio, fftValue);
 					}
-					if (mfccValue > 64)
+					if (mfccValue > 66.5)
 					{
 						UploadedFile.dictionaryMFCC.Add(item.TitleAudio, mfccValue);
 					}

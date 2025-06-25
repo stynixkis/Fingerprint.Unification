@@ -61,7 +61,7 @@ namespace Fingerprint.Unifications.Components.Pages
 				var newFilePath = Path.Combine(uploadsDir, "audioFileCompare.wav");
 				try
 				{
-					await using var stream = e.File.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
+					await using var stream = e.File.OpenReadStream(maxAllowedSize: 50 * 1024 * 1024);
 					await using var fileStream = new FileStream(newFilePath, FileMode.Create);
 					await stream.CopyToAsync(fileStream);
 					Console.WriteLine($"Файл сохранен: {newFilePath}");

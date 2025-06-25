@@ -69,6 +69,31 @@ else
 </div>
 @code
 {
+	private bool _shouldReload = true;
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender && _shouldReload)
+		{
+			// Проверяем, не была ли уже выполнена перезагрузка
+			var hasReloaded = await JsRuntime.InvokeAsync<string>("localStorage.getItem", "audioComparisonReloaded");
+
+			if (hasReloaded != "true")
+			{
+				// Устанавливаем флаг перезагрузки
+				await JsRuntime.InvokeVoidAsync("localStorage.setItem", "audioComparisonReloaded", "true");
+
+				// Перезагружаем страницу с очисткой кэша
+				await JsRuntime.InvokeVoidAsync("eval", "window.location.reload(true)");
+			}
+			else
+			{
+				// Если уже перезагружались - сбрасываем флаг
+				await JsRuntime.InvokeVoidAsync("localStorage.removeItem", "audioComparisonReloaded");
+				_shouldReload = false;
+			}
+		}
+	}
 	public void DownloadChartFFT()
 	{
 		if (PathFrequencyHistogramOne == "")

@@ -30,9 +30,30 @@
 </label>
 
 @code{
-	protected override void OnInitialized()
+	private bool _shouldReload = true;
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		ClearCache();
+		if (firstRender && _shouldReload)
+		{
+			// Проверяем, не была ли уже выполнена перезагрузка
+			var hasReloaded = await JsRuntime.InvokeAsync<string>("localStorage.getItem", "audioComparisonReloaded");
+
+			if (hasReloaded != "true")
+			{
+				// Устанавливаем флаг перезагрузки
+				await JsRuntime.InvokeVoidAsync("localStorage.setItem", "audioComparisonReloaded", "true");
+
+				// Перезагружаем страницу с очисткой кэша
+				await JsRuntime.InvokeVoidAsync("eval", "window.location.reload(true)");
+			}
+			else
+			{
+				// Если уже перезагружались - сбрасываем флаг
+				await JsRuntime.InvokeVoidAsync("localStorage.removeItem", "audioComparisonReloaded");
+				_shouldReload = false;
+			}
+		}
 	}
 	public async Task ExeptionView(InputFileChangeEventArgs e)
 	{
@@ -43,6 +64,13 @@
 				await JsRuntime.InvokeVoidAsync("alert", "Требуется файл формата .wav");
 				return;
 			}
+			Console.WriteLine(e.File.Size);
+			if (e.File.Size > 50 * 1024 * 1024)
+			{
+				await JsRuntime.InvokeVoidAsync("alert", "Размер файла должен быть не больше 50 МБ");
+				return;
+			}
+
 			HandleFileSelected(e);
 		}
 		catch (Exception ex)
