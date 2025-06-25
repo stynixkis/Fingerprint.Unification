@@ -4,6 +4,8 @@ using Fingerprint.Unifications.Models;
 using Fingerprint.Unifications.Storage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
+using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 
 namespace Fingerprint.Unifications.Components.Pages
 {
@@ -17,178 +19,236 @@ namespace Fingerprint.Unifications.Components.Pages
 		protected bool showLoading = false;
 		public async Task HandleFileSelected(InputFileChangeEventArgs e)
 		{
+			showLoading = true;
+			StateHasChanged();
+
 			try
 			{
-				// Проверяем формат файла
+				// 1. Проверка формата файла
 				UploadedFile.FileName = e.File.Name;
-				Console.WriteLine(e.File.Name);
+				Console.WriteLine($"Начало обработки файла: {UploadedFile.FileName}");
+
 				if (!e.File.Name.EndsWith(".wav", StringComparison.OrdinalIgnoreCase))
+				{
+					Console.WriteLine("Ошибка: Неверный формат файла");
+					return;
+				}
+
+				// 2. Подготовка директорий
+				var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "AudioFilesUser");
+				var histogramsDir = Path.Combine("wwwroot", "Pictures", "Histogram");
+
+				Directory.CreateDirectory(uploadsDir);
+				Directory.CreateDirectory(histogramsDir);
+
+				// 3. Удаление старых файлов
+				var filesToDelete = new List<string>
+				{
+					Path.Combine(uploadsDir, "audioFileCompare.wav"),
+					Path.Combine(histogramsDir, "mfcc_histogram_two.png"),
+					Path.Combine(histogramsDir, "frequency_histogram_two.png")
+				};
+
+				foreach (var filePath in filesToDelete)
+				{
+					if (!await TryDeleteFile(filePath))
+					{
+						return;
+					}
+				}
+
+				// 4. Сохранение нового файла
+				var newFilePath = Path.Combine(uploadsDir, "audioFileCompare.wav");
+				try
+				{
+					await using var stream = e.File.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
+					await using var fileStream = new FileStream(newFilePath, FileMode.Create);
+					await stream.CopyToAsync(fileStream);
+					Console.WriteLine($"Файл сохранен: {newFilePath}");
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Ошибка сохранения: {ex.Message}");
+					return;
+				}
+
+				// 5. Обработка через API
+				var path = Path.Combine(uploadsDir, "audioFile.wav");
+				var pathCompare = newFilePath;
+
+				// Отправка обоих файлов на обработку
+				if (!await ProcessAudioFile(path) || !await ProcessAudioFile(pathCompare))
 				{
 					return;
 				}
 
-				// Создаем папку для сохранения файлов
-				var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "AudioFilesUser");
-				Directory.CreateDirectory(uploadsDir);
+				// 6. Сравнение отпечатков
+				var workingDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+					"Downloads", "FingerprintResults");
 
-				// Готовим путь для сохранения файла
-				var uniqueFileName = "audioFileCompare.wav";
-				var filePath = Path.Combine(uploadsDir, uniqueFileName);
-
-				// Удаляем старый файл, если он существует
-				if (File.Exists(filePath))
+				var fingerprintFiles = new[]
 				{
-					File.Delete(filePath);
+					Path.Combine(workingDir, "fingerprint_audioFileCompare.bin"),
+					Path.Combine(workingDir, "fingerprint_audioFile.bin"),
+					Path.Combine(workingDir, "audioFileCompare_MFCC.bin"),
+					Path.Combine(workingDir, "audioFile_MFCC.bin")
+				};
+
+				// Ожидание генерации файлов
+				if (!await WaitForFiles(fingerprintFiles, maxAttempts: 10, delayMs: 1000))
+				{
+					return;
 				}
 
-				// Сохраняем новый файл с правильным освобождением ресурсов
-				await using (var stream = e.File.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024))
-				await using (var fileStream = new FileStream(filePath, FileMode.CreateNew))
+				// 7. Выполнение сравнения
+				var (fftResult, mfccResult) = await CompareFingerprints(
+					Path.Combine(workingDir, "fingerprint_audioFile.bin"),
+					Path.Combine(workingDir, "fingerprint_audioFileCompare.bin"),
+					Path.Combine(workingDir, "audioFile_MFCC.bin"),
+					Path.Combine(workingDir, "audioFileCompare_MFCC.bin"));
+
+				if (fftResult == null || mfccResult == null)
 				{
-					await stream.CopyToAsync(fileStream);
+					return;
 				}
 
-				Console.WriteLine($"Файл сохранен: {filePath}");
-				showLoading = true;
-				StateHasChanged();
+				UploadedFile.CompareFFT = fftResult;
+				UploadedFile.CompareMFCC = mfccResult;
 
-				try
-				{
-					// Пути к аудиофайлам
-					var pathCompare = Path.Combine(uploadsDir, "audioFileCompare.wav");
-					var path = Path.Combine(uploadsDir, "audioFile.wav");
+				// 8. Визуализация результатов
+				_mfccFingerprinter.PlotAudioWaveformTwo(path, pathCompare);
+				_fingerprintService.GenerateComparisonHistogram(path, pathCompare);
 
-					// Первый запрос для основного файла
-					using (var client = new HttpClient())
-					{
-						var formData = new MultipartFormDataContent();
-						formData.Add(new StringContent(path), "path");
-
-						var response = await client.PostAsync(
-							"https://localhost:7199/api/audiofiles/Generation-without-saving-in-the-database",
-							formData);
-
-						if (response.IsSuccessStatusCode)
-						{
-							UploadedFile.AudioFileInformation = await response.Content.ReadFromJsonAsync<AudioFile>();
-							Console.WriteLine($"id = {UploadedFile.AudioFileInformation.IdAudio}\n - title = {UploadedFile.AudioFileInformation.TitleAudio}\n" +
-								$" - fft = {UploadedFile.AudioFileInformation.FftPrint}\n - mfcc = {UploadedFile.AudioFileInformation.MfccPrint}\n");
-						}
-						else
-						{
-							Console.WriteLine($"Ошибка: {response.StatusCode}. {await response.Content.ReadAsStringAsync()}\n");
-						}
-					}
-
-					// Второй запрос для сравниваемого файла
-					using (var client = new HttpClient())
-					{
-						var formDataCompare = new MultipartFormDataContent();
-						formDataCompare.Add(new StringContent(pathCompare), "path");
-
-						var responseCompare = await client.PostAsync(
-							"https://localhost:7199/api/audiofiles/Generation-without-saving-in-the-database",
-							formDataCompare);
-
-						if (responseCompare.IsSuccessStatusCode)
-						{
-							var informationFromAPI = await responseCompare.Content.ReadFromJsonAsync<AudioFile>();
-							Console.WriteLine($"id = {informationFromAPI.IdAudio}\n - title = {informationFromAPI.TitleAudio}\n" +
-								$" - fft = {informationFromAPI.FftPrint}\n - mfcc = {informationFromAPI.MfccPrint}\n");
-						}
-						else
-						{
-							Console.WriteLine($"Ошибка: {responseCompare.StatusCode}. {await responseCompare.Content.ReadAsStringAsync()}\n");
-						}
-					}
-
-					// Ждем генерации файлов отпечатков
-					await Task.Delay(5000);
-
-					var workingDir = Path.Combine(
-					Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-					"Downloads",
-					"FingerprintResults");
-
-					// Пути к файлам отпечатков
-					var pathCompareFFT = Path.Combine(workingDir, "fingerprint_audioFileCompare.bin");
-					var pathFFT = Path.Combine(workingDir, "fingerprint_audioFile.bin");
-					var pathCompareMFCC = Path.Combine(workingDir, "audioFileCompare_MFCC.bin");
-					var pathMFCC = Path.Combine(workingDir, "audioFile_MFCC.bin");
-
-					// Проверяем существование файлов перед сравнением
-					if (!File.Exists(pathCompareFFT) || !File.Exists(pathFFT) ||
-						!File.Exists(pathCompareMFCC) || !File.Exists(pathMFCC))
-					{
-						Console.WriteLine("Ошибка: Один или несколько файлов отпечатков не найдены");
-						return;
-					}
-
-					// Запросы на сравнение
-					using (var client = new HttpClient())
-					{
-						// Сравнение FFT
-						var formDataCompareFFT = new MultipartFormDataContent();
-						formDataCompareFFT.Add(new StringContent(pathFFT), "pathFirst");
-						formDataCompareFFT.Add(new StringContent(pathCompareFFT), "pathSecond");
-
-						// Сравнение MFCC
-						var formDataCompareMFCC = new MultipartFormDataContent();
-						formDataCompareMFCC.Add(new StringContent(pathMFCC), "pathFirst");
-						formDataCompareMFCC.Add(new StringContent(pathCompareMFCC), "pathSecond");
-
-						var responseFFT = await client.PostAsync(
-										"https://localhost:7199/api/audiofiles/compare-fft",
-										formDataCompareFFT);
-
-						var responseMFCC = await client.PostAsync(
-							"https://localhost:7199/api/audiofiles/compare-mfcc",
-							formDataCompareMFCC);
-
-						if (responseFFT.IsSuccessStatusCode && responseMFCC.IsSuccessStatusCode)
-						{
-							try
-							{
-								// Читаем ответ как строку перед десериализацией
-								var fftResponseContent = await responseFFT.Content.ReadAsStringAsync();
-								var mfccResponseContent = await responseMFCC.Content.ReadAsStringAsync();
-
-								UploadedFile.CompareFFT = fftResponseContent; // Если ответ - просто строка
-								UploadedFile.CompareMFCC = mfccResponseContent;
-
-								Console.WriteLine($"FFT сравнение: {UploadedFile.CompareFFT}");
-								Console.WriteLine($"MFCC сравнение: {UploadedFile.CompareMFCC}");
-
-								// Визуализация
-								_mfccFingerprinter.PlotAudioWaveformTwo(path, pathCompare);
-								_fingerprintService.GenerateComparisonHistogram(path, pathCompare);
-
-								Navigation.NavigateTo("/AudioFileComparison");
-							}
-							catch (Exception ex)
-							{
-								Console.WriteLine($"Ошибка обработки ответа: {ex.Message}");
-							}
-						}
-						else
-						{
-							var fftError = await responseFFT.Content.ReadAsStringAsync();
-							var mfccError = await responseMFCC.Content.ReadAsStringAsync();
-							Console.WriteLine($"Ошибка FFT: {responseFFT.StatusCode}. {fftError}");
-							Console.WriteLine($"Ошибка MFCC: {responseMFCC.StatusCode}. {mfccError}");
-						}
-					}
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine($"Критическая ошибка: {ex.ToString()}");
-				}
-
+				Navigation.NavigateTo("/AudioFileComparison");
 			}
 			finally
 			{
 				showLoading = false;
 				StateHasChanged();
+			}
+		}
+
+		// Вспомогательные методы:
+
+		private async Task<bool> TryDeleteFile(string filePath, int maxAttempts = 3, int delayMs = 300)
+		{
+			for (int attempt = 1; attempt <= maxAttempts; attempt++)
+			{
+				try
+				{
+					if (!File.Exists(filePath)) return true;
+
+					// Освобождаем ресурсы
+					GC.Collect();
+					GC.WaitForPendingFinalizers();
+
+					File.Delete(filePath);
+					Console.WriteLine($"Файл удален: {filePath}");
+					return true;
+				}
+				catch (IOException ex) when (ex.Message.Contains("used by another process"))
+				{
+					if (attempt < maxAttempts)
+					{
+						await Task.Delay(delayMs * attempt);
+						continue;
+					}
+					Console.WriteLine($"Не удалось удалить файл после {maxAttempts} попыток: {filePath}");
+					return false;
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Ошибка при удалении файла: {ex.Message}");
+					return false;
+				}
+			}
+			return false;
+		}
+
+		private async Task<bool> ProcessAudioFile(string filePath)
+		{
+			using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(60) };
+			try
+			{
+				var formData = new MultipartFormDataContent();
+				formData.Add(new StringContent(filePath), "path");
+
+				var response = await client.PostAsync(
+					"https://localhost:7199/api/audiofiles/Generation-without-saving-in-the-database",
+					formData);
+
+				if (!response.IsSuccessStatusCode)
+				{
+					Console.WriteLine($"Ошибка API: {response.StatusCode}");
+					return false;
+				}
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Ошибка обработки файла: {ex.Message}");
+				return false;
+			}
+		}
+
+		private async Task<bool> WaitForFiles(string[] filePaths, int maxAttempts, int delayMs)
+		{
+			for (int attempt = 1; attempt <= maxAttempts; attempt++)
+			{
+				if (filePaths.All(File.Exists))
+				{
+					return true;
+				}
+
+				if (attempt < maxAttempts)
+				{
+					await Task.Delay(delayMs);
+					Console.WriteLine($"Ожидание файлов... Попытка {attempt}/{maxAttempts}");
+				}
+			}
+			return false;
+		}
+
+		private async Task<(string fftResult, string mfccResult)> CompareFingerprints(
+			string fftPath1, string fftPath2, string mfccPath1, string mfccPath2)
+		{
+			using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(60) };
+			try
+			{
+				// Сравнение FFT
+				var fftResponse = await client.PostAsync(
+					"https://localhost:7199/api/audiofiles/compare-fft",
+					new MultipartFormDataContent
+					{
+				{ new StringContent(fftPath1), "pathFirst" },
+				{ new StringContent(fftPath2), "pathSecond" }
+					});
+
+				// Сравнение MFCC
+				var mfccResponse = await client.PostAsync(
+					"https://localhost:7199/api/audiofiles/compare-mfcc",
+					new MultipartFormDataContent
+					{
+				{ new StringContent(mfccPath1), "pathFirst" },
+				{ new StringContent(mfccPath2), "pathSecond" }
+					});
+
+				if (!fftResponse.IsSuccessStatusCode || !mfccResponse.IsSuccessStatusCode)
+				{
+					Console.WriteLine($"Ошибки сравнения: FFT={fftResponse.StatusCode}, MFCC={mfccResponse.StatusCode}");
+					return (null, null);
+				}
+
+				return (
+					await fftResponse.Content.ReadAsStringAsync(),
+					await mfccResponse.Content.ReadAsStringAsync()
+				);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Ошибка сравнения: {ex.Message}");
+				return (null, null);
 			}
 		}
 	}

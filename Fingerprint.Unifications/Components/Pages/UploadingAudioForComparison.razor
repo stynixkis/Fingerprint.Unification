@@ -58,7 +58,7 @@
 {
 	<div class="loading-overlay">
 		<div class="loading-content">
-			<img class="loading-gif" src="/loading.gif" alt="Загрузка" />
+			<img class="loading-gif" src="/Pictures/loading.gif" alt="Загрузка" />
 			<div class="loading-text">ПОДОЖДИТЕ, ИДЕТ СРАВНЕНИЕ!</div>
 		</div>
 	</div>
@@ -80,6 +80,10 @@
 </label>
 
 @code {
+    protected override void OnInitialized()
+    {
+        ClearCache();
+    }
     public async Task ExeptionView(InputFileChangeEventArgs e)
     {
         try
@@ -89,11 +93,20 @@
                 await JsRuntime.InvokeVoidAsync("alert", "Требуется файл формата .wav");
                 return;
             }
-            HandleFileSelected(e);
+            else
+                HandleFileSelected(e);
         }
         catch (Exception ex)
         {
             Console.WriteLine("Ошибка: " + ex.Message);
         }
+    }
+    public async Task ClearCache()
+    {
+        await JsRuntime.InvokeVoidAsync("eval",
+            "caches.keys().then(function(names) { names.forEach(function(name) { caches.delete(name); }) }");
+
+        await JsRuntime.InvokeVoidAsync("eval",
+            "if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function(registrations) { registrations.forEach(function(registration) { registration.unregister(); }); } }");
     }
 }

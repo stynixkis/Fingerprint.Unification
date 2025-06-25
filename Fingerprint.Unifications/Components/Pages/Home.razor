@@ -30,6 +30,10 @@
 </label>
 
 @code{
+	protected override void OnInitialized()
+	{
+		ClearCache();
+	}
 	public async Task ExeptionView(InputFileChangeEventArgs e)
 	{
 		try
@@ -45,5 +49,13 @@
 		{
 			Console.WriteLine("Ошибка: " + ex.Message);
 		}
+	}
+	public async Task ClearCache()
+	{
+		await JsRuntime.InvokeVoidAsync("eval",
+			"caches.keys().then(function(names) { names.forEach(function(name) { caches.delete(name); }) }");
+
+		await JsRuntime.InvokeVoidAsync("eval",
+			"if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function(registrations) { registrations.forEach(function(registration) { registration.unregister(); }); } }");
 	}
 }
