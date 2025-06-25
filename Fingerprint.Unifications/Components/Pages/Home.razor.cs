@@ -1,7 +1,6 @@
 ﻿using Fingerprint.Unifications.Storage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.JSInterop;
 
 namespace Fingerprint.Unifications.Components.Pages
 {
@@ -20,7 +19,7 @@ namespace Fingerprint.Unifications.Components.Pages
 
 				if (!e.File.Name.EndsWith(".wav", StringComparison.OrdinalIgnoreCase))
 				{
-                    Console.WriteLine("неверный формат файла! нужен .WAV файл!");
+					Console.WriteLine("неверный формат файла! нужен .WAV файл!");
 					return;
 				}
 

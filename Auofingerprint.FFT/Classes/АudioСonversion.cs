@@ -11,7 +11,7 @@ namespace Audiofingerprint.Classes
 			{
 				throw new Exception("File extension must be .wav");
 			}
-			Console.WriteLine("------------ППРЕОБРАЗОВАНИЕ АУДИО-----------");
+			Console.WriteLine("------------ПРЕОБРАЗОВАНИЕ АУДИО-----------");
 			AudioFileReader originalAudio = new AudioFileReader(path);
 			Console.WriteLine("\nИз стерео в моно>>>>");
 

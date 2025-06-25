@@ -11,7 +11,7 @@ namespace Fingerprint.Unifications.Controllers
 	public class AudioFilesController : ControllerBase
 	{
 		private readonly FingerprintDatabaseContext _context;
-		private MfccFingerprinter _fingerprinterMFCC = new MfccFingerprinter();
+		public MfccFingerprinter _fingerprinterMFCC = new MfccFingerprinter();
 		private FingerprintService _fingerprintService = new FingerprintService();
 		public AudioFilesController(FingerprintDatabaseContext context)
 		{

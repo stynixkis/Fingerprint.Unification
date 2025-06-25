@@ -1,11 +1,8 @@
 ﻿using Audiofingerprint.Services;
 using AudioFingerprinting;
-using Fingerprint.Unifications.Models;
 using Fingerprint.Unifications.Storage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.JSInterop;
-using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 
 namespace Fingerprint.Unifications.Components.Pages
 {
