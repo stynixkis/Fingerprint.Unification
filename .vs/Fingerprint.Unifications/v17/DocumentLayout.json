@@ -1,7 +1,32 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|c:\\users\\aagor\\source\\repos\\fingerprint.unifications\\fingerprint.unifications\\components\\pages\\uploadingaudioforcomparison.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|solutionrelative:fingerprint.unifications\\components\\pages\\uploadingaudioforcomparison.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB4D3ED9-6B33-4138-A720-85BEEE5E76A8}|Fingerprint.UnificationsTests\\Fingerprint.UnificationsTests.csproj|c:\\users\\aagor\\source\\repos\\fingerprint.unifications\\fingerprint.unificationstests\\fingerprintapitest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CB4D3ED9-6B33-4138-A720-85BEEE5E76A8}|Fingerprint.UnificationsTests\\Fingerprint.UnificationsTests.csproj|solutionrelative:fingerprint.unificationstests\\fingerprintapitest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|c:\\users\\aagor\\source\\repos\\fingerprint.unifications\\fingerprint.unifications\\components\\pages\\audiofilecomparison.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|solutionrelative:fingerprint.unifications\\components\\pages\\audiofilecomparison.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|c:\\users\\aagor\\source\\repos\\fingerprint.unifications\\fingerprint.unifications\\components\\pages\\audiofilecomparison.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|solutionrelative:fingerprint.unifications\\components\\pages\\audiofilecomparison.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|c:\\users\\aagor\\source\\repos\\fingerprint.unifications\\fingerprint.unifications\\components\\pages\\workingwithfingerprint.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|solutionrelative:fingerprint.unifications\\components\\pages\\workingwithfingerprint.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|c:\\users\\aagor\\source\\repos\\fingerprint.unifications\\fingerprint.unifications\\components\\pages\\workingwithfingerprint.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA7114B0-3686-4360-B9AC-922AC318DFB4}|Fingerprint.Unifications\\Fingerprint.Unifications.csproj|solutionrelative:fingerprint.unifications\\components\\pages\\workingwithfingerprint.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 343,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,6 +47,79 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UploadingAudioForComparison.razor",
+              "DocumentMoniker": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\UploadingAudioForComparison.razor",
+              "RelativeDocumentMoniker": "Fingerprint.Unifications\\Components\\Pages\\UploadingAudioForComparison.razor",
+              "ToolTip": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\UploadingAudioForComparison.razor",
+              "RelativeToolTip": "Fingerprint.Unifications\\Components\\Pages\\UploadingAudioForComparison.razor",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAEsAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-25T23:34:23.904Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FingerprintAPITest.cs",
+              "DocumentMoniker": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.UnificationsTests\\FingerprintAPITest.cs",
+              "RelativeDocumentMoniker": "Fingerprint.UnificationsTests\\FingerprintAPITest.cs",
+              "ToolTip": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.UnificationsTests\\FingerprintAPITest.cs",
+              "RelativeToolTip": "Fingerprint.UnificationsTests\\FingerprintAPITest.cs",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAowLgAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-25T20:57:45.397Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "WorkingWithFingerprint.razor.cs",
+              "DocumentMoniker": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\WorkingWithFingerprint.razor.cs",
+              "RelativeDocumentMoniker": "Fingerprint.Unifications\\Components\\Pages\\WorkingWithFingerprint.razor.cs",
+              "ToolTip": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\WorkingWithFingerprint.razor.cs",
+              "RelativeToolTip": "Fingerprint.Unifications\\Components\\Pages\\WorkingWithFingerprint.razor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-25T20:27:13.394Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AudioFileComparison.razor.cs",
+              "DocumentMoniker": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\AudioFileComparison.razor.cs",
+              "RelativeDocumentMoniker": "Fingerprint.Unifications\\Components\\Pages\\AudioFileComparison.razor.cs",
+              "ToolTip": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\AudioFileComparison.razor.cs",
+              "RelativeToolTip": "Fingerprint.Unifications\\Components\\Pages\\AudioFileComparison.razor.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAxwBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-25T20:23:33.818Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AudioFileComparison.razor",
+              "DocumentMoniker": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\AudioFileComparison.razor",
+              "RelativeDocumentMoniker": "Fingerprint.Unifications\\Components\\Pages\\AudioFileComparison.razor",
+              "ToolTip": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\AudioFileComparison.razor",
+              "RelativeToolTip": "Fingerprint.Unifications\\Components\\Pages\\AudioFileComparison.razor",
+              "ViewState": "AgIAACsAAAAAAAAAAAAuwEEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-25T20:23:10.194Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "WorkingWithFingerprint.razor",
+              "DocumentMoniker": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\WorkingWithFingerprint.razor",
+              "RelativeDocumentMoniker": "Fingerprint.Unifications\\Components\\Pages\\WorkingWithFingerprint.razor",
+              "ToolTip": "C:\\Users\\aagor\\source\\repos\\Fingerprint.Unifications\\Fingerprint.Unifications\\Components\\Pages\\WorkingWithFingerprint.razor",
+              "RelativeToolTip": "Fingerprint.Unifications\\Components\\Pages\\WorkingWithFingerprint.razor",
+              "ViewState": "AgIAACwAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-25T20:22:52.425Z"
             }
           ]
         },

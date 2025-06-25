@@ -9,170 +9,224 @@ using Moq;
 
 public class AudioFilesControllerTests
 {
-	private readonly Mock<FingerprintDatabaseContext> _mockContext;
-	private readonly AudioFilesController _controller;
+    private readonly Mock<FingerprintDatabaseContext> _mockContext;
+    private readonly AudioFilesController _controller;
 
-	public AudioFilesControllerTests()
-	{
-		_mockContext = new Mock<FingerprintDatabaseContext>();
-		_controller = new AudioFilesController(_mockContext.Object);
-	}
+    public AudioFilesControllerTests()
+    {
+        // Инициализация mock контекста базы данных и контроллера для тестирования
+        _mockContext = new Mock<FingerprintDatabaseContext>();
+        _controller = new AudioFilesController(_mockContext.Object);
+    }
 
+    /// <summary>
+    /// Тестирует метод GetAudioFiles на возврат списка аудиофайлов
+    /// Проверяет что:
+    /// 1. Возвращается ActionResult с коллекцией AudioFile
+    /// 2. Коллекция содержит ожидаемое количество элементов
+    /// 3. Данные в коллекции соответствуют тестовым данным
+    /// </summary>
+    [Fact]
+    public async Task GetAudioFiles_ReturnsListOfAudioFiles()
+    {
+        // Arrange
+        var serviceProvider = new ServiceCollection()
+            .AddEntityFrameworkInMemoryDatabase()
+            .BuildServiceProvider();
 
-	[Fact]
-	public async Task GetAudioFiles_ReturnsListOfAudioFiles()
-	{
-		// Arrange
-		// Создаем новый сервис-провайдер для каждого теста
-		var serviceProvider = new ServiceCollection()
-			.AddEntityFrameworkInMemoryDatabase()
-			.BuildServiceProvider();
+        var options = new DbContextOptionsBuilder<FingerprintDatabaseContext>()
+            .UseInMemoryDatabase(databaseName: "TestDatabase")
+            .UseInternalServiceProvider(serviceProvider)
+            .Options;
 
-		var options = new DbContextOptionsBuilder<FingerprintDatabaseContext>()
-			.UseInMemoryDatabase(databaseName: "TestDatabase")
-			.UseInternalServiceProvider(serviceProvider) // Используем наш сервис-провайдер
-			.Options;
+        using (var context = new FingerprintDatabaseContext(options))
+        {
+            context.AudioFiles.Add(new AudioFile
+            {
+                IdAudio = 1,
+                TitleAudio = "Test Audio",
+                FftPrint = new byte[0],
+                MfccPrint = new byte[0]
+            });
+            await context.SaveChangesAsync();
+        }
 
-		// Добавляем тестовые данные в InMemory базу данных
-		using (var context = new FingerprintDatabaseContext(options))
-		{
-			context.AudioFiles.Add(new AudioFile
-			{
-				IdAudio = 1,
-				TitleAudio = "Test Audio",
-				FftPrint = new byte[0], // Пустой массив байтов
-				MfccPrint = new byte[0] // Пустой массив uint
-			});
-			await context.SaveChangesAsync();
-		}
+        using (var context = new FingerprintDatabaseContext(options))
+        {
+            var controller = new AudioFilesController(context);
 
-		using (var context = new FingerprintDatabaseContext(options))
-		{
-			var controller = new AudioFilesController(context);
+            // Act
+            var result = await controller.GetAudioFiles();
 
-			// Act
-			var result = await controller.GetAudioFiles();
+            // Assert
+            var actionResult = Assert.IsType<ActionResult<IEnumerable<AudioFile>>>(result);
+            var returnValue = Assert.IsType<List<AudioFile>>(actionResult.Value);
+            Assert.Single(returnValue);
+            Assert.Equal("Test Audio", returnValue.First().TitleAudio);
+        }
+    }
 
-			// Assert
-			var actionResult = Assert.IsType<ActionResult<IEnumerable<AudioFile>>>(result);
-			var returnValue = Assert.IsType<List<AudioFile>>(actionResult.Value);
-			Assert.Single(returnValue);
-			Assert.Equal("Test Audio", returnValue.First().TitleAudio);
-		}
-	}
+    /// <summary>
+    /// Тестирует метод GetAudioFile на успешное получение аудиофайла по существующему ID
+    /// Проверяет что:
+    /// 1. Для существующего/несуществующего ID возвращается корректный AudioFile
+    /// 2. Возвращаемый объект содержит ожидаемые значения
+    /// </summary>
+    [Theory]
+    [InlineData(1)]  // Существующий ID
+    [InlineData(999)] // Несуществующий ID
+    public async Task GetAudioFile_ReturnsAudioFile_WhenIdExists(int id)
+    {
+        // Arrange
+        var testAudioFile = new AudioFile
+        {
+            IdAudio = 1,
+            TitleAudio = "Test Audio File",
+            FftPrint = new byte[] { 0x01, 0x02, 0x03 },
+            MfccPrint = new byte[] { 0x07, 0x04, 0x03 }
+        };
 
-	// Вспомогательный класс, если CreateMockDbSet() не работает
-	public static class MockDbSetHelper
-	{
-		public static DbSet<T> CreateMockDbSet<T>(List<T> data) where T : class
-		{
-			var queryable = data.AsQueryable();
-			var mockSet = new Mock<DbSet<T>>();
+        _mockContext.Setup(c => c.AudioFiles.FindAsync(id))
+            .ReturnsAsync(testAudioFile);
 
-			mockSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(queryable.Provider);
-			mockSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(queryable.Expression);
-			mockSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(queryable.ElementType);
-			mockSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(queryable.GetEnumerator());
+        // Act
+        var result = await _controller.GetAudioFile(id);
 
-			mockSet.As<IAsyncEnumerable<T>>()
-				.Setup(m => m.GetAsyncEnumerator(It.IsAny<CancellationToken>()))
-				.Returns(new TestAsyncEnumerator<T>(queryable.GetEnumerator()));
+        // Assert
 
-			return mockSet.Object;
-		}
-	}
+        if (result != null)
+        {
+            var actionResult = Assert.IsType<ActionResult<AudioFile>>(result);
+            var returnValue = Assert.IsType<AudioFile>(actionResult.Value);
 
-	internal class TestAsyncEnumerator<T> : IAsyncEnumerator<T>
-	{
-		private readonly IEnumerator<T> _inner;
-		public TestAsyncEnumerator(IEnumerator<T> inner) => _inner = inner;
-		public T Current => _inner.Current;
-		public ValueTask<bool> MoveNextAsync() => new ValueTask<bool>(_inner.MoveNext());
-		public ValueTask DisposeAsync() => new ValueTask();
-	}
+            Assert.Equal(testAudioFile.IdAudio, returnValue.IdAudio);
+            Assert.Equal(testAudioFile.TitleAudio, returnValue.TitleAudio);
+            Assert.Equal(testAudioFile.FftPrint, returnValue.FftPrint);
+            Assert.Equal(testAudioFile.MfccPrint, returnValue.MfccPrint);
+        }
+        else
+            Assert.IsType<NotFoundResult>(result.Result);
+    }
 
-	[Fact]
-	public async Task GetAudioFile_ReturnsNotFound_WhenIdInvalid()
-	{
-		// Arrange
-		_mockContext.Setup(c => c.AudioFiles.FindAsync(It.IsAny<int>()))
-			.ReturnsAsync((AudioFile)null);
+    /// <summary>
+    /// Тестирует метод PostAudioFileDB на валидацию пустого пути
+    /// Проверяет что:
+    /// 1. При передаче пустого пути возвращается BadRequestObjectResult
+    /// </summary>
+    [Fact]
+    public async Task PostAudioFileDB_ReturnsBadRequest_WhenPathEmpty()
+    {
+        // Act
+        var result = await _controller.PostAudioFileDB("");
 
-		// Act
-		var result = await _controller.GetAudioFile(1);
+        // Assert
+        Assert.IsType<BadRequestObjectResult>(result.Result);
+    }
 
-		// Assert
-		Assert.IsType<NotFoundResult>(result.Result);
-	}
+    /// <summary>
+    /// Тестирует метод PostAudioFilesComparisonMFCC на корректное сравнение файлов
+    /// Проверяет что:
+    /// 1. Возвращается ActionResult с результатом сравнения
+    /// 2. Результат содержит ожидаемый текст с процентом схожести
+    /// </summary>
+    [Fact]
+    public async Task CompareMFCC_ReturnsComparisonResult()
+    {
+        // Arrange
+        var testFile1 = Path.Combine(Path.GetTempPath(), "test1.bin");
+        var testFile2 = Path.Combine(Path.GetTempPath(), "test2.bin");
 
-	[Fact]
-	public async Task PostAudioFileDB_ReturnsBadRequest_WhenPathEmpty()
-	{
-		// Act
-		var result = await _controller.PostAudioFileDB("");
+        var testData = new byte[] { 0x01, 0x02, 0x03, 0x04 };
+        await File.WriteAllBytesAsync(testFile1, testData);
+        await File.WriteAllBytesAsync(testFile2, testData);
 
-		// Assert
-		Assert.IsType<BadRequestObjectResult>(result.Result);
-	}
+        var fingerprinter = new TestableMfccFingerprinter();
 
-	[Fact]
-	public async Task CompareMFCC_ReturnsComparisonResult()
-	{
-		// Arrange
-		var testFile1 = Path.Combine(Path.GetTempPath(), "test1.bin");
-		var testFile2 = Path.Combine(Path.GetTempPath(), "test2.bin");
+        var controller = new AudioFilesController(_mockContext.Object)
+        {
+            _fingerprinterMFCC = fingerprinter
+        };
 
-		// Создаем корректные тестовые данные
-		var testData = new byte[] { 0x01, 0x02, 0x03, 0x04 };
-		await File.WriteAllBytesAsync(testFile1, testData);
-		await File.WriteAllBytesAsync(testFile2, testData);
+        // Act
+        var result = await controller.PostAudioFilesComparisonMFCC(testFile1, testFile2);
 
-		// Используем реальный MfccFingerprinter с переопределением метода Compare
-		var fingerprinter = new TestableMfccFingerprinter();
+        // Assert
+        Assert.NotNull(result);
+        var actionResult = Assert.IsType<ActionResult<string>>(result);
+        Assert.NotNull(actionResult.Value);
+        var value = Assert.IsType<string>(actionResult.Value);
+        Assert.Contains("Процент схожести по методу MFCC:", value);
+    }
 
-		// Создаем контроллер
-		var controller = new AudioFilesController(_mockContext.Object)
-		{
-			_fingerprinterMFCC = fingerprinter
-		};
+    /// <summary>
+    /// Тестирует метод DeleteAudioFile на успешное удаление
+    /// Проверяет что:
+    /// 1. Для существующего ID возвращается NoContentResult
+    /// 2. Метод Remove вызывается ровно один раз
+    /// </summary>
+    [Fact]
+    public async Task DeleteAudioFile_ReturnsNoContent_WhenSuccessful()
+    {
+        // Arrange
+        var testFile = new AudioFile { IdAudio = 1 };
+        _mockContext.Setup(c => c.AudioFiles.FindAsync(1))
+            .ReturnsAsync(testFile);
+        _mockContext.Setup(c => c.SaveChangesAsync(default))
+            .ReturnsAsync(1);
 
-		// Act
-		var result = await controller.PostAudioFilesComparisonMFCC(testFile1, testFile2);
+        // Act
+        var result = await _controller.DeleteAudioFile(1);
 
-		// Assert
-		Assert.NotNull(result); // Проверяем что результат не null
+        // Assert
+        Assert.IsType<NoContentResult>(result);
+        _mockContext.Verify(c => c.AudioFiles.Remove(testFile), Times.Once());
+    }
 
-		var actionResult = Assert.IsType<ActionResult<string>>(result);
-		Assert.NotNull(actionResult.Value); // Проверяем что Value не null
+    // Вспомогательные классы
 
-		var value = Assert.IsType<string>(actionResult.Value);
-		Assert.Contains("Процент схожести по методу MFCC:", value);
-	}
+    /// <summary>
+    /// Вспомогательный класс для создания mock DbSet
+    /// </summary>
+    public static class MockDbSetHelper
+    {
+        public static DbSet<T> CreateMockDbSet<T>(List<T> data) where T : class
+        {
+            var queryable = data.AsQueryable();
+            var mockSet = new Mock<DbSet<T>>();
 
-	// Тестовая реализация с гарантированным результатом
-	public class TestableMfccFingerprinter : MfccFingerprinter
-	{
-		public virtual double Compare(byte[] first, byte[] second)
-		{
-			// Всегда возвращаем фиксированное значение для теста
-			return 0.85;
-		}
-	}
+            mockSet.As<IQueryable<T>>().Setup(m => m.Provider).Returns(queryable.Provider);
+            mockSet.As<IQueryable<T>>().Setup(m => m.Expression).Returns(queryable.Expression);
+            mockSet.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(queryable.ElementType);
+            mockSet.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(queryable.GetEnumerator());
 
-	[Fact]
-	public async Task DeleteAudioFile_ReturnsNoContent_WhenSuccessful()
-	{
-		// Arrange
-		var testFile = new AudioFile { IdAudio = 1 };
-		_mockContext.Setup(c => c.AudioFiles.FindAsync(1))
-			.ReturnsAsync(testFile);
-		_mockContext.Setup(c => c.SaveChangesAsync(default))
-			.ReturnsAsync(1);
+            mockSet.As<IAsyncEnumerable<T>>()
+                .Setup(m => m.GetAsyncEnumerator(It.IsAny<CancellationToken>()))
+                .Returns(new TestAsyncEnumerator<T>(queryable.GetEnumerator()));
 
-		// Act
-		var result = await _controller.DeleteAudioFile(1);
+            return mockSet.Object;
+        }
+    }
 
-		// Assert
-		Assert.IsType<NoContentResult>(result);
-	}
+    /// <summary>
+    /// Тестовая реализация IAsyncEnumerator для поддержки async тестов
+    /// </summary>
+    internal class TestAsyncEnumerator<T> : IAsyncEnumerator<T>
+    {
+        private readonly IEnumerator<T> _inner;
+        public TestAsyncEnumerator(IEnumerator<T> inner) => _inner = inner;
+        public T Current => _inner.Current;
+        public ValueTask<bool> MoveNextAsync() => new ValueTask<bool>(_inner.MoveNext());
+        public ValueTask DisposeAsync() => new ValueTask();
+    }
+
+    /// <summary>
+    /// Тестовая реализация MfccFingerprinter с фиксированным результатом сравнения
+    /// </summary>
+    public class TestableMfccFingerprinter : MfccFingerprinter
+    {
+        public virtual double Compare(byte[] first, byte[] second)
+        {
+            return 0.85;
+        }
+    }
 }

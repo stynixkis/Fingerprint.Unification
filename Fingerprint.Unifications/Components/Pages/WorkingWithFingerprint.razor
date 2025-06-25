@@ -38,7 +38,7 @@
 	</div>
 </header>
 
-<h2>СПЕКТРАЛЬНЫЙ АНАЛИЗ</h2>
+<h2 style="margin-top: 3vw;">СПЕКТРАЛЬНЫЙ АНАЛИЗ</h2>
 
 @if (@PathFrequencyHistogramOne != "")
 {
@@ -62,6 +62,7 @@ else
 {
 	<p style="color:red">Ошибка загрузки графика</p>
 }
+<h3 style="margin-top: 3vw; margin-bottom: 3vw; margin-left: 5vw; color: #42aaff">Аудио-отпечатки сохранены в папке Downloads в директории FingerprintResults</h3>
 
 <div class="buttons-container2">
 	<button class="button-download2" @onclick="DownloadChartFFT">Скачать график<br />Спектрального анализа</button>
@@ -112,7 +113,7 @@ else
 			string destinationPath = Path.Combine(workingDir, $"frequency_histogram_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.png");
 
 			File.Copy(fullPath, destinationPath, overwrite: true);
-			JsRuntime.InvokeVoidAsync("alert", "Загрузка выполнена успешно!");
+			JsRuntime.InvokeVoidAsync("alert", "Загрузка выполнена успешно!\nФайл находится в папке Downloads");
 		}
 	}
 	public void DownloadChartMFCC()
@@ -133,7 +134,7 @@ else
 			string destinationPath = Path.Combine(workingDir, $"mfcc_histogram_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.png");
 
 			File.Copy(fullPath, destinationPath, overwrite: true);
-			JsRuntime.InvokeVoidAsync("alert", "Загрузка выполнена успешно!");
+			JsRuntime.InvokeVoidAsync("alert", "Загрузка выполнена успешно!\nФайл находится в папке Downloads");
 		}
 	}
 }
