@@ -8,9 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        configuration: Release
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,24 +17,20 @@ jobs:
         with:
           dotnet-version: '8.0.x'
           
-      - name: Build project
-        run: dotnet build Fingerprint.Unifications/Fingerprint.Unifications.csproj --configuration ${{ matrix.configuration }}
+      - name: Build project in Release
+        run: dotnet build Fingerprint.Unifications/Fingerprint.Unifications.csproj --configuration Release
         
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-files-${{ matrix.configuration }}
+          name: build-files
           path: |
-            Fingerprint.Unifications/bin/${{ matrix.configuration }}/**/*
-            Fingerprint.Unifications/obj/${{ matrix.configuration }}/**/*
+            Fingerprint.Unifications/bin/Release/**/*
           retention-days: 7
 
   test:
     needs: build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        configuration: Release
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -47,17 +40,25 @@ jobs:
         with:
           dotnet-version: '8.0.x'
           
-      - name: Run tests
-        run: dotnet test Fingerprint.UnificationsTests/Fingerprint.UnificationsTests.csproj --configuration ${{ matrix.configuration }} --collect:"Code Coverage"
+      - name: Install coverlet.collector
+        run: dotnet add Fingerprint.UnificationsTests/Fingerprint.UnificationsTests.csproj package coverlet.collector
+          
+      - name: Run tests with code coverage
+        run: |
+          dotnet test Fingerprint.UnificationsTests/Fingerprint.UnificationsTests.csproj \
+            --configuration Release \
+            --collect:"XPlat Code Coverage" \
+            --results-directory ./coverage-results \
+            --logger "trx;LogFileName=test-results.trx" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
       
       - name: Upload code coverage report
         uses: actions/upload-artifact@v4
         with:
           name: code-coverage
           path: |
-            **/coverage.cobertura.xml
-            **/test-results.trx
-            TestResults/**/*
+            coverage-results/**/coverage.cobertura.xml
+            coverage-results/**/*.trx
           retention-days: 7
 
   deploy:
@@ -75,6 +76,13 @@ jobs:
         with:
           name: code-coverage
           path: coverage/
-        
+          
+      - name: List downloaded files
+        run: |
+          echo "=== Build artifacts ==="
+          find dist/ -type f | head -10
+          echo "=== Coverage reports ==="
+          find coverage/ -type f
+          
       - name: Deploy
-        run: ./deploy.sh
+        run: /deploy.sh
