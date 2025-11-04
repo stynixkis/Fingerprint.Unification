@@ -16,6 +16,9 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+      - name: Set culture for .NET
+        run: |
+          echo "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false" >> $GITHUB_ENV
           
       - name: Build project
         run: dotnet build Fingerprint.Unifications/Fingerprint.Unifications.csproj --configuration ${{ matrix.configuration }}

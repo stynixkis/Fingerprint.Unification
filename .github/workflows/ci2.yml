@@ -39,7 +39,11 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-          
+
+      - name: Set culture for .NET
+        run: |
+          echo "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false" >> $GITHUB_ENV
+
       - name: Install coverlet.collector
         run: dotnet add Fingerprint.UnificationsTests/Fingerprint.UnificationsTests.csproj package coverlet.collector
           
