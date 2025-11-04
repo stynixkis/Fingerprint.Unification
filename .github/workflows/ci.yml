@@ -48,24 +48,17 @@ jobs:
         run: dotnet test Fingerprint.UnificationsTests/Fingerprint.UnificationsTests.csproj --configuration ${{ matrix.configuration }}
 
   deploy:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        configuration: [Debug, Release]
     needs: [build, test]
+    runs-on: ubuntu-latest
     steps:
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: build-output-${{ matrix.configuration }}
-        path: ./downloaded-artifacts/${{ matrix.configuration }}
-
-    - name: List downloaded files
-      run: ls -la ./downloaded-artifacts/${{ matrix.configuration }}/
-
-    - name: Upload final artifacts (${{ matrix.configuration }})
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ matrix.configuration }}-final-build
-        path: ./downloaded-artifacts/${{ matrix.configuration }}/
-        retention-days: 30
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-files
+          path: dist/
+          
+      - name: List downloaded files
+        run: ls -la dist/
+        
+      - name: Deploy
+        run: ./deploy.sh
