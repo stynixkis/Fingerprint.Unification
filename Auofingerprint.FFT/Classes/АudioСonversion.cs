@@ -103,7 +103,6 @@ namespace Audiofingerprint.Classes
 
 			if (maxAmplitude == 0 || maxAmplitude == 1)
 			{
-				//Console.WriteLine("Нормализация не требуется.");
 				return audio;
 			}
 			audio.Position = 0;
