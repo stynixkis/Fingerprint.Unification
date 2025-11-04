@@ -1,0 +1,80 @@
+name: Report on code coverage when committing to the main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        configuration: Release
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+          
+      - name: Build project
+        run: dotnet build Fingerprint.Unifications/Fingerprint.Unifications.csproj --configuration ${{ matrix.configuration }}
+        
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-files-${{ matrix.configuration }}
+          path: |
+            Fingerprint.Unifications/bin/${{ matrix.configuration }}/**/*
+            Fingerprint.Unifications/obj/${{ matrix.configuration }}/**/*
+          retention-days: 7
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        configuration: Release
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+          
+      - name: Run tests
+        run: dotnet test Fingerprint.UnificationsTests/Fingerprint.UnificationsTests.csproj --configuration ${{ matrix.configuration }} --collect:"Code Coverage"
+      
+      - name: Upload code coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage
+          path: |
+            **/coverage.cobertura.xml
+            **/test-results.trx
+            TestResults/**/*
+          retention-days: 7
+
+  deploy:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-files
+          path: dist/
+          
+      - name: Download coverage report
+        uses: actions/download-artifact@v4
+        with:
+          name: code-coverage
+          path: coverage/
+        
+      - name: Deploy
+        run: ./deploy.sh
