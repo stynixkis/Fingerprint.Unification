@@ -51,11 +51,17 @@ jobs:
     needs: [build, test]
     runs-on: ubuntu-latest
     steps:
-      - name: Download build artifacts
+      - name: Download Debug build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: build-files
-          path: dist/
+          name: build-files-Debug
+          path: dist/debug/
+          
+      - name: Download Release build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-files-Release
+          path: dist/release/
           
       - name: List downloaded files
         run: ls -la dist/
