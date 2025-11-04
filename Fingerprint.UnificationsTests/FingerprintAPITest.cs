@@ -152,14 +152,23 @@ public class AudioFilesControllerTests
 
         // Assert
         Assert.NotNull(result);
-        var actionResult = Assert.IsType<ActionResult<string>>(result);
-        Assert.NotNull(actionResult.Value);
-        var value = Assert.IsType<string>(actionResult.Value);
         
+        // Проверяем что Result не null
+        Assert.NotNull(result.Result);
+        
+        // Проверяем что это OkObjectResult
         var okResult = result.Result as OkObjectResult;
+        Assert.NotNull(okResult);
+        
+        // Проверяем что Value не null
+        Assert.NotNull(okResult.Value);
+        
+        // Проверяем что Value является строкой
         var resultString = okResult.Value as string;
         Assert.NotNull(resultString);
-        Assert.Contains("MFCC", resultString); 
+        
+        // Проверяем содержимое строки
+        Assert.Contains("MFCC", resultString);
     }
 
     /// <summary>
