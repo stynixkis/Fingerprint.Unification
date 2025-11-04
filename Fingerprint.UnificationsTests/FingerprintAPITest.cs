@@ -130,13 +130,17 @@ public class AudioFilesControllerTests
     /// 2. ��������� �������� ��������� ����� � ��������� ��������
     /// </summary>
     [Fact]
-    public async Task CompareMFCC_ReturnsComparisonResult()
+    public async Task CompareMFCC_ReturnsssComparisonResult()
     {
+        // Объявляем переменные в начале метода
+        string testFile1 = null;
+        string testFile2 = null;
+
         try
         {
             // Arrange
-            var testFile1 = Path.Combine(Path.GetTempPath(), "test1.bin");
-            var testFile2 = Path.Combine(Path.GetTempPath(), "test2.bin");
+            testFile1 = Path.Combine(Path.GetTempPath(), "test1.bin");
+            testFile2 = Path.Combine(Path.GetTempPath(), "test2.bin");
 
             var testData = new byte[] { 0x01, 0x02, 0x03, 0x04 };
             await File.WriteAllBytesAsync(testFile1, testData);
@@ -163,17 +167,12 @@ public class AudioFilesControllerTests
             // Assert
             Assert.NotNull(result);
 
-            // Если метод возвращает ActionResult<string>
+            // Исправление ошибки CS8121 - правильная проверка типа
             if (result is ActionResult<string> actionResult)
             {
                 Assert.NotNull(actionResult.Result);
                 var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
                 var resultString = Assert.IsType<string>(okResult.Value);
-                Assert.Contains("MFCC", resultString);
-            }
-            // Если метод возвращает просто string
-            else if (result is string resultString)
-            {
                 Assert.Contains("MFCC", resultString);
             }
             else
@@ -189,11 +188,13 @@ public class AudioFilesControllerTests
         }
         finally
         {
-            // Очистка временных файлов
+            // Очистка временных файлов - теперь переменные доступны
             try
             {
-                if (File.Exists(testFile1)) File.Delete(testFile1);
-                if (File.Exists(testFile2)) File.Delete(testFile2);
+                if (testFile1 != null && File.Exists(testFile1)) 
+                    File.Delete(testFile1);
+                if (testFile2 != null && File.Exists(testFile2)) 
+                    File.Delete(testFile2);
             }
             catch { /* ignore */ }
         }
