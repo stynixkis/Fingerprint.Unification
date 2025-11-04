@@ -84,5 +84,3 @@ jobs:
           echo "=== Coverage reports ==="
           find coverage/ -type f
           
-      - name: Deploy
-        run: /deploy.sh

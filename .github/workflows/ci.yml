@@ -59,6 +59,3 @@ jobs:
           
       - name: List downloaded files
         run: ls -la dist/
-        
-      - name: Deploy
-        run: ./deploy.sh
