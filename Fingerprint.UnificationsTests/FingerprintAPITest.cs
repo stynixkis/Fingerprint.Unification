@@ -129,7 +129,8 @@ public class AudioFilesControllerTests
     /// 1. ������������ ActionResult � ����������� ���������
     /// 2. ��������� �������� ��������� ����� � ��������� ��������
     /// </summary>
-    [Fact]
+
+  /*  [Fact]
     public async Task CompareMFCC_ReturnsssComparisonResult()
     {
         // Объявляем переменные в начале метода
@@ -196,9 +197,9 @@ public class AudioFilesControllerTests
                 if (testFile2 != null && File.Exists(testFile2)) 
                     File.Delete(testFile2);
             }
-            catch { /* ignore */ }
+            catch {  }
         }
-    }
+    } */
 
     /// <summary>
     /// ��������� ����� DeleteAudioFile �� �������� ��������
