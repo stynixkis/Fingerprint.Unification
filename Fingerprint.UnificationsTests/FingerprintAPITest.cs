@@ -155,8 +155,11 @@ public class AudioFilesControllerTests
         var actionResult = Assert.IsType<ActionResult<string>>(result);
         Assert.NotNull(actionResult.Value);
         var value = Assert.IsType<string>(actionResult.Value);
-        var resultString = Assert.IsType<string>(okResult.Value);
-        Assert.Contains("MFCC", resultString);
+        
+        var okResult = result.Result as OkObjectResult;
+        var resultString = okResult.Value as string;
+        Assert.NotNull(resultString);
+        Assert.Contains("MFCC", resultString); 
     }
 
     /// <summary>
