@@ -132,43 +132,71 @@ public class AudioFilesControllerTests
     [Fact]
     public async Task CompareMFCC_ReturnsComparisonResult()
     {
-        // Arrange
-        var testFile1 = Path.Combine(Path.GetTempPath(), "test1.bin");
-        var testFile2 = Path.Combine(Path.GetTempPath(), "test2.bin");
-
-        var testData = new byte[] { 0x01, 0x02, 0x03, 0x04 };
-        await File.WriteAllBytesAsync(testFile1, testData);
-        await File.WriteAllBytesAsync(testFile2, testData);
-
-        var fingerprinter = new TestableMfccFingerprinter();
-
-        var controller = new AudioFilesController(_mockContext.Object)
+        try
         {
-            _fingerprinterMFCC = fingerprinter
-        };
+            // Arrange
+            var testFile1 = Path.Combine(Path.GetTempPath(), "test1.bin");
+            var testFile2 = Path.Combine(Path.GetTempPath(), "test2.bin");
 
-        // Act
-        var result = await controller.PostAudioFilesComparisonMFCC(testFile1, testFile2);
+            var testData = new byte[] { 0x01, 0x02, 0x03, 0x04 };
+            await File.WriteAllBytesAsync(testFile1, testData);
+            await File.WriteAllBytesAsync(testFile2, testData);
 
-        // Assert
-        Assert.NotNull(result);
-        
-        // Проверяем что Result не null
-        Assert.NotNull(result.Result);
-        
-        // Проверяем что это OkObjectResult
-        var okResult = result.Result as OkObjectResult;
-        Assert.NotNull(okResult);
-        
-        // Проверяем что Value не null
-        Assert.NotNull(okResult.Value);
-        
-        // Проверяем что Value является строкой
-        var resultString = okResult.Value as string;
-        Assert.NotNull(resultString);
-        
-        // Проверяем содержимое строки
-        Assert.Contains("MFCC", resultString);
+            // Проверяем что файлы создались
+            Assert.True(File.Exists(testFile1), $"File {testFile1} does not exist");
+            Assert.True(File.Exists(testFile2), $"File {testFile2} does not exist");
+
+            var fingerprinter = new TestableMfccFingerprinter();
+
+            var controller = new AudioFilesController(_mockContext.Object)
+            {
+                _fingerprinterMFCC = fingerprinter
+            };
+
+            // Act
+            var result = await controller.PostAudioFilesComparisonMFCC(testFile1, testFile2);
+            
+            // Отладочная информация
+            Console.WriteLine($"Result type: {result?.GetType().Name}");
+            Console.WriteLine($"Result is null: {result == null}");
+
+            // Assert
+            Assert.NotNull(result);
+
+            // Если метод возвращает ActionResult<string>
+            if (result is ActionResult<string> actionResult)
+            {
+                Assert.NotNull(actionResult.Result);
+                var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
+                var resultString = Assert.IsType<string>(okResult.Value);
+                Assert.Contains("MFCC", resultString);
+            }
+            // Если метод возвращает просто string
+            else if (result is string resultString)
+            {
+                Assert.Contains("MFCC", resultString);
+            }
+            else
+            {
+                Assert.Fail($"Unexpected result type: {result?.GetType().Name}");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Выводим детальную информацию об ошибке
+            Console.WriteLine($"Test failed with exception: {ex}");
+            throw;
+        }
+        finally
+        {
+            // Очистка временных файлов
+            try
+            {
+                if (File.Exists(testFile1)) File.Delete(testFile1);
+                if (File.Exists(testFile2)) File.Delete(testFile2);
+            }
+            catch { /* ignore */ }
+        }
     }
 
     /// <summary>
