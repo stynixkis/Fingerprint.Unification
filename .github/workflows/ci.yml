@@ -24,9 +24,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-files-${{ matrix.configuration }}
-          path: |
-            Fingerprint.Unifications/bin/${{ matrix.configuration }}/**/*
-            Fingerprint.Unifications/obj/${{ matrix.configuration }}/**/*
+          path: /dist
           retention-days: 7
 
   test:
